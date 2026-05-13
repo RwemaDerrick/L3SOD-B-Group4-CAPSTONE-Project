@@ -312,8 +312,19 @@
                             formResponse.textContent = data.message;
                         }
                     } catch (error) {
-                        formResponse.className = 'form-message error';
-                        formResponse.textContent = 'Could not connect to the backend. Is the server running?';
+                        // FALLBACK: Save to LocalStorage if backend is down
+                        console.warn('Backend unreachable. Falling back to LocalStorage.');
+                        const localUsers = JSON.parse(localStorage.getItem('moodlink_users') || '[]');
+                        localUsers.push({...userData, id: Date.now(), createdAt: new Date(), type: 'local'});
+                        localStorage.setItem('moodlink_users', JSON.stringify(localUsers));
+
+                        formResponse.className = 'form-message success';
+                        formResponse.textContent = 'Account created locally! (Backend was unreachable, but we saved your data).';
+                        registerForm.reset();
+                        setTimeout(() => {
+                            modal.classList.remove('active');
+                            formResponse.style.display = 'none';
+                        }, 3000);
                     }
                 });
             }

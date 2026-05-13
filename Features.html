@@ -335,7 +335,16 @@
                 }, 500);
 
             } catch (error) {
-                addMessage("I'm having trouble connecting right now. Please ensure the backend is running!", 'ai');
+                console.warn('AI Backend unreachable. Using offline response.');
+                const offlineReplies = [
+                    "I'm here for you, even in offline mode. Tell me more about that.",
+                    "That's a valid feeling. I'm listening.",
+                    "Sharing your thoughts is the first step. I hear you."
+                ];
+                const reply = offlineReplies[Math.floor(Math.random() * offlineReplies.length)];
+                setTimeout(() => {
+                    addMessage(reply + " (Offline Mode)", 'ai');
+                }, 500);
             }
         }
 
