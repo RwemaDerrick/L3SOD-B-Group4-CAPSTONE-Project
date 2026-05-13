@@ -107,9 +107,17 @@ body {
 }
 
 .logo img {
-    height: 45px;
+    height: 50px;
     width: auto;
     object-fit: contain;
+    mix-blend-mode: screen; /* Blends out the white background into the dark navbar */
+    filter: brightness(1.1) contrast(1.1);
+    transition: all 0.3s ease;
+}
+
+.logo:hover img {
+    filter: brightness(1.3) drop-shadow(0 0 8px var(--accent-1));
+    transform: scale(1.05);
 }
 
 .logo span {
@@ -423,9 +431,11 @@ body {
 }
 
 .pulse-logo {
-    height: 80px;
+    height: 100px;
     margin-bottom: 2rem;
     animation: pulse-preloader 2s infinite ease-in-out;
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 15px var(--accent-2));
 }
 
 .loading-bar {
