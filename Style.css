@@ -220,7 +220,8 @@ body {
 }
 
 #three-canvas-container,
-#about-three-container {
+#about-three-container,
+#features-three-container {
     position: absolute;
     top: 0;
     left: 0;
