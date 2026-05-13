@@ -77,6 +77,41 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // --- Typewriter Effect ---
+        function setupTypewriter(t) {
+            const HTML = t.innerHTML;
+            t.innerHTML = "";
+            let cursor = 0;
+            let tag = "";
+            let writingTag = false;
+
+            function type() {
+                if (cursor < HTML.length) {
+                    if (HTML[cursor] === "<") writingTag = true;
+                    if (writingTag) tag += HTML[cursor];
+                    else t.innerHTML += HTML[cursor];
+                    
+                    if (HTML[cursor] === ">") {
+                        writingTag = false;
+                        t.innerHTML += tag;
+                        tag = "";
+                    }
+                    cursor++;
+                    setTimeout(type, writingTag ? 0 : 50);
+                }
+            }
+            type();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroTitle = document.querySelector('.hero-content h1');
+            if (heroTitle) {
+                // Prepare title for typewriter (remove fade-in class if needed)
+                heroTitle.classList.remove('fade-in-up', 'delay-1');
+                setupTypewriter(heroTitle);
+            }
+        });
+
         // --- Three.js 3D Mind Sphere ---
         const container = document.getElementById('three-canvas-container');
         const scene = new THREE.Scene();
