@@ -219,7 +219,8 @@ body {
     gap: 1rem;
 }
 
-#three-canvas-container {
+#three-canvas-container,
+#about-three-container {
     position: absolute;
     top: 0;
     left: 0;

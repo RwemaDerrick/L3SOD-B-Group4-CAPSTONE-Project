@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="about-image fade-in delay-2">
-                    <img src="about_hero_abstract_1778695243923.png" alt="Emotional Connection Abstract" style="width: 100%; display: block;">
+                    <div id="about-three-container"></div>
                 </div>
             </div>
 
@@ -138,21 +138,91 @@
                 </div>
                 <div class="glass-card value-card fade-in-up delay-3">
                     <div class="value-icon">⚡</div>
-                    <h3>AI Innovation</h3>
-                    <p>Leveraging cutting-edge emotional AI to help you articulate and process your feelings better.</p>
+                    <h3>Real-time Connection</h3>
+                    <p>Find your emotional match in seconds, when you need it most, without the noise of traditional social media.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer style="padding: 60px 5%; text-align: center; border-top: 1px solid var(--glass-border); margin-top: 80px;">
-        <div class="logo" style="margin-bottom: 1rem;">
-            <span>Mood</span>link
+    <footer style="padding: 60px 5%; text-align: center; border-top: 1px solid var(--glass-border); margin-top: 40px;">
+        <div class="logo" onclick="location.href='index.html'">
+            <img src="Assets/logo.png" alt="Moodlinks Logo">
         </div>
-        <p style="color: var(--text-secondary);">&copy; 2026 Moodlink. Redefining digital empathy.</p>
+        <p style="color: var(--text-secondary);">&copy; 2026 Moodlink. Connected emotions.</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+        // --- Three.js 3D Neural Web ---
+        const container = document.getElementById('about-three-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        container.appendChild(renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 100;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i=0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const material = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0xff2a85,
+            transparent: true,
+            opacity: 0.8
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, material);
+        scene.add(particlesMesh);
+
+        // Lines connecting points
+        const linesMaterial = new THREE.LineBasicMaterial({ color: 0x8a2be2, transparent: true, opacity: 0.2 });
+        const linesGeometry = new THREE.BufferGeometry();
+        scene.add(new THREE.LineSegments(linesGeometry, linesMaterial));
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.001;
+            particlesMesh.rotation.x += 0.0005;
+
+            // Simple line connection logic (visual only)
+            const positions = particlesGeometry.attributes.position.array;
+            const linePositions = [];
+            for(let i=0; i < particlesCount; i++) {
+                for(let j=i+1; j < particlesCount; j++) {
+                    const dx = positions[i*3] - positions[j*3];
+                    const dy = positions[i*3+1] - positions[j*3+1];
+                    const dz = positions[i*3+2] - positions[j*3+2];
+                    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                    if(dist < 2.5) {
+                        linePositions.push(positions[i*3], positions[i*3+1], positions[i*3+2]);
+                        linePositions.push(positions[j*3], positions[j*3+1], positions[j*3+2]);
+                    }
+                }
+            }
+            linesGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.offsetWidth / container.offsetHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+        });
+
+        animate();
+
+        // Scroll navbar effect
         document.addEventListener('scroll', () => {
             const nav = document.querySelector('.navbar');
             if (window.scrollY > 50) {
