@@ -41,6 +41,39 @@ app.get('/api/users', (req, res) => {
     res.json(users);
 });
 
+// AI Matchmaking Endpoint
+app.post('/api/ai/match', (req, res) => {
+    const { mood } = req.body;
+    const users = JSON.parse(fs.readFileSync(DB_PATH));
+    
+    // Find users with the same mood, excluding a simulated current user
+    const matches = users.filter(u => u.mood.toLowerCase() === mood.toLowerCase());
+    
+    if (matches.length > 0) {
+        const randomMatch = matches[Math.floor(Math.random() * matches.length)];
+        res.json({ success: true, match: randomMatch });
+    } else {
+        res.json({ success: false, message: 'No matches found yet. You are the first with this vibe!' });
+    }
+});
+
+// AI Emotional Support Chat Endpoint
+app.post('/api/ai/chat', (req, res) => {
+    const { message } = req.body;
+    
+    // Simple empathetic response simulation
+    const responses = [
+        "I hear you. That sounds really challenging, but remember you're not alone.",
+        "It's completely valid to feel that way. How long have you been feeling this?",
+        "Thank you for sharing that with me. Moodlink is here to help you process these emotions.",
+        "That's a very interesting perspective. Let's explore that feeling together.",
+        "I'm sensing a lot of strength in how you're handling this."
+    ];
+    
+    const aiResponse = responses[Math.floor(Math.random() * responses.length)];
+    res.json({ reply: aiResponse });
+});
+
 app.listen(PORT, () => {
     console.log(`Moodlink Backend running on http://localhost:${PORT}`);
 });

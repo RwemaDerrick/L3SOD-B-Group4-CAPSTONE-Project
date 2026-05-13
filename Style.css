@@ -632,6 +632,75 @@ body {
     border: 1px solid rgba(255, 42, 133, 0.2);
 }
 
+/* AI Chat Demo Styles */
+.ai-chat-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+.chat-display {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.message {
+    max-width: 80%;
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease;
+}
+
+.message.ai {
+    align-self: flex-start;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: white;
+    border-bottom-left-radius: 5px;
+}
+
+.message.user {
+    align-self: flex-end;
+    background: var(--accent-1);
+    color: white;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 5px 15px rgba(255, 42, 133, 0.3);
+}
+
+.chat-controls {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--glass-border);
+}
+
+.chat-controls input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.chat-controls input:focus {
+    border-color: var(--accent-2);
+}
+
 .landing-section {
     padding: 100px 5%;
     max-width: 1200px;

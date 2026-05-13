@@ -207,6 +207,22 @@
             </div>
         </section>
 
+        <!-- Live AI Demo Section -->
+        <section class="landing-section ai-demo-section" style="text-align: center;">
+            <div class="badge">Live Demo</div>
+            <h2 style="font-size: 3rem; margin-bottom: 3rem;">Talk to <span class="text-gradient">Aria AI</span></h2>
+            
+            <div class="glass-card ai-chat-container fade-in-up">
+                <div id="chat-messages" class="chat-display">
+                    <div class="message ai">Hi, I'm Aria. I'm here to listen. How are you feeling right now?</div>
+                </div>
+                <div class="chat-controls">
+                    <input type="text" id="user-chat-input" placeholder="Share your thoughts...">
+                    <button id="send-ai-chat" class="btn-primary glow">Send</button>
+                </div>
+            </div>
+        </section>
+
         <section class="showcase-section">
             <div class="showcase-container">
                 <div class="showcase-text fade-in-up">
@@ -291,6 +307,49 @@
             } else {
                 nav.classList.remove('scrolled');
             }
+        });
+        // --- AI Chat Demo Logic ---
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('user-chat-input');
+        const sendBtn = document.getElementById('send-ai-chat');
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if(!text) return;
+
+            // Add user message
+            addMessage(text, 'user');
+            chatInput.value = '';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/ai/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await response.json();
+                
+                // Add AI response
+                setTimeout(() => {
+                    addMessage(data.reply, 'ai');
+                }, 500);
+
+            } catch (error) {
+                addMessage("I'm having trouble connecting right now. Please ensure the backend is running!", 'ai');
+            }
+        }
+
+        function addMessage(text, type) {
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            chatMessages.appendChild(msg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') sendMessage();
         });
     </script>
 </body>
