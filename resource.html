@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodLink | Resources</title>
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#070707;
+            color:white;
+        }
+
+        /* NAVBAR */
+
+        header{
+            width:100%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 8%;
+            background:#0f0f0f;
+            border-bottom:1px solid #1f1f1f;
+            position:sticky;
+            top:0;
+            z-index:1000;
+        }
+
+        .logo{
+            font-size:32px;
+            font-weight:700;
+            color:#8a2be2;
+        }
+
+        .logo span{
+            color:#00ff9d;
+        }
+
+        nav a{
+            text-decoration:none;
+            color:white;
+            margin:0 15px;
+            transition:0.3s;
+            font-weight:500;
+        }
+
+        nav a:hover,
+        .active{
+            color:#00ff9d;
+        }
+
+        .login-btn{
+            padding:10px 24px;
+            border:none;
+            border-radius:30px;
+            background:linear-gradient(45deg,#8a2be2,#00ff9d);
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .login-btn:hover{
+            transform:scale(1.05);
+        }
+
+        /* HERO SECTION */
+
+        .hero{
+            min-height:90vh;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:60px 8%;
+            gap:50px;
+        }
+
+        .hero-text{
+            flex:1;
+        }
+
+        .hero-text h1{
+            font-size:65px;
+            line-height:1.2;
+            margin-bottom:25px;
+
+            background:linear-gradient(to right,#8a2be2,#00ff9d);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .hero-text p{
+            color:#d1d1d1;
+            line-height:1.9;
+            font-size:18px;
+            margin-bottom:30px;
+        }
+
+        .hero-text button{
+            padding:15px 35px;
+            border:none;
+            border-radius:40px;
+            background:linear-gradient(45deg,#8a2be2,#00ff9d);
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .hero-text button:hover{
+            transform:translateY(-5px);
+            box-shadow:0 0 25px #8a2be2;
+        }
+
+        /* HERO IMAGE */
+
+        .hero-image{
+            flex:1;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .circle{
+            width:380px;
+            height:380px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#8a2be2,#00ff9d);
+
+            box-shadow:
+            0 0 40px #8a2be2,
+            0 0 90px rgba(0,255,157,0.5);
+        }
+
+        /* RESOURCES SECTION */
+
+        .resources{
+            padding:80px 8%;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:30px;
+        }
+
+        .card{
+            background:#111111;
+            border:1px solid #1f1f1f;
+            border-radius:20px;
+            padding:30px;
+            transition:0.4s;
+        }
+
+        .card:hover{
+            transform:translateY(-10px);
+            border-color:#00ff9d;
+            box-shadow:0 0 25px rgba(0,255,157,0.3);
+        }
+
+        .card h2{
+            color:#8a2be2;
+            margin-bottom:15px;
+        }
+
+        .card p{
+            color:#cfcfcf;
+            line-height:1.8;
+            margin-bottom:20px;
+        }
+
+        .card a{
+            text-decoration:none;
+            color:#00ff9d;
+            font-weight:600;
+        }
+
+        /* FEATURE SECTION */
+
+        .feature{
+            padding:80px 8%;
+        }
+
+        .feature-box{
+            background:linear-gradient(135deg,#111111,#1a1a1a);
+            border:1px solid #222;
+            border-radius:30px;
+            padding:60px;
+            text-align:center;
+
+            box-shadow:0 0 30px rgba(138,43,226,0.2);
+        }
+
+        .feature-box h1{
+            color:#00ff9d;
+            font-size:45px;
+            margin-bottom:20px;
+        }
+
+        .feature-box p{
+            color:#d6d6d6;
+            line-height:1.9;
+            margin-bottom:30px;
+        }
+
+        .feature-box button{
+            padding:15px 35px;
+            border:none;
+            border-radius:35px;
+            background:linear-gradient(45deg,#8a2be2,#00ff9d);
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .feature-box button:hover{
+            transform:scale(1.05);
+        }
+
+        /* FOOTER */
+
+        footer{
+            margin-top:50px;
+            text-align:center;
+            padding:40px;
+            border-top:1px solid #1f1f1f;
+        }
+
+        footer h2{
+            color:#8a2be2;
+            margin-bottom:10px;
+        }
+
+        footer p{
+            color:#999;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px){
+
+            .hero{
+                flex-direction:column;
+                text-align:center;
+            }
+
+            .hero-text h1{
+                font-size:45px;
+            }
+
+            nav{
+                display:none;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header>
+
+        <div class="logo">
+            Mood<span>Link</span>
+        </div>
+
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Journal</a>
+            <a href="#">Community</a>
+            <a href="#" class="active">Resources</a>
+            <a href="#">Contact</a>
+        </nav>
+
+        <button class="login-btn">Login</button>
+
+    </header>
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <h1>
+                Resources For Your Mental Wellness
+            </h1>
+
+            <p>
+                Discover self-care tools, mental health guides,
+                breathing exercises, and community support
+                designed to help students feel better every day.
+            </p>
+
+            <button>
+                Explore Resources
+            </button>
+
+        </div>
+
+        <div class="hero-image">
+
+            <div class="circle"></div>
+
+        </div>
+
+    </section>
+
+    <!-- RESOURCES -->
+
+    <section class="resources">
+
+        <div class="card">
+
+            <h2>🧠 Mental Health Guides</h2>
+
+            <p>
+                Learn about stress, anxiety,
+                emotional balance, and healthy habits.
+            </p>
+
+            <a href="#">
+                Read More →
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>🌿 Self-Care Tips</h2>
+
+            <p>
+                Discover sleep routines,
+                wellness ideas, and calming activities.
+            </p>
+
+            <a href="#">
+                Explore →
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>💬 Community Support</h2>
+
+            <p>
+                Connect with others safely,
+                share experiences, and get support.
+            </p>
+
+            <a href="#">
+                Join Community →
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <h2>🎧 Relaxing Sounds</h2>
+
+            <p>
+                Enjoy relaxing music,
+                meditation sounds, and breathing exercises.
+            </p>
+
+            <a href="#">
+                Listen Now →
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURE -->
+
+    <section class="feature">
+
+        <div class="feature-box">
+
+            <h1>
+                You Are Not Alone 💜
+            </h1>
+
+            <p>
+                MoodLink helps students manage emotions,
+                reduce stress, and improve mental wellness
+                through guidance and support.
+            </p>
+
+            <button>
+                Get Started
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <h2>MoodLink</h2>
+
+        <p>
+            Connect. Heal. Grow.
+        </p>
+
+    </footer>
+
+</body>
+</html>
