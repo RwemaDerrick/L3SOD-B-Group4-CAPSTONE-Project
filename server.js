@@ -60,18 +60,32 @@ app.post('/api/ai/match', (req, res) => {
 // AI Emotional Support Chat Endpoint
 app.post('/api/ai/chat', (req, res) => {
     const { message } = req.body;
+    const msg = message.toLowerCase();
     
-    // Simple empathetic response simulation
-    const responses = [
-        "I hear you. That sounds really challenging, but remember you're not alone.",
-        "It's completely valid to feel that way. How long have you been feeling this?",
-        "Thank you for sharing that with me. Moodlink is here to help you process these emotions.",
-        "That's a very interesting perspective. Let's explore that feeling together.",
-        "I'm sensing a lot of strength in how you're handling this."
-    ];
+    let reply = "";
+
+    // Keyword-based sentiment logic
+    if (msg.includes("sad") || msg.includes("cry") || msg.includes("lonely")) {
+        reply = "I'm so sorry you're feeling this way. Loneliness can be heavy, but sharing it here is a brave first step. Would you like to talk about what's making you sad?";
+    } else if (msg.includes("angry") || msg.includes("mad") || msg.includes("frustrated")) {
+        reply = "It's completely okay to feel frustrated. Sometimes we just need to vent. What's bothering you the most right now?";
+    } else if (msg.includes("stress") || msg.includes("anxious") || msg.includes("worried") || msg.includes("overwhelmed")) {
+        reply = "Take a deep breath. Being overwhelmed is tough, but we can break things down together. Have you tried a quick breathing exercise today?";
+    } else if (msg.includes("happy") || msg.includes("good") || msg.includes("great") || msg.includes("excited")) {
+        reply = "That's wonderful to hear! I love sharing in your joy. What made your day so bright?";
+    } else if (msg.includes("hello") || msg.includes("hi") || msg.includes("hey")) {
+        reply = "Hello! I'm Aria, your MoodAI companion. I'm here to listen and support you. How's your heart feeling today?";
+    } else {
+        const generalReplies = [
+            "Thank you for sharing that with me. I'm listening.",
+            "Tell me more about how that makes you feel.",
+            "I'm here for you. Your emotions are valid and important.",
+            "That sounds like a lot to process. I'm glad you're talking to me about it."
+        ];
+        reply = generalReplies[Math.floor(Math.random() * generalReplies.length)];
+    }
     
-    const aiResponse = responses[Math.floor(Math.random() * responses.length)];
-    res.json({ reply: aiResponse });
+    res.json({ reply: reply });
 });
 
 app.listen(PORT, () => {
