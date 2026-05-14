@@ -67,8 +67,13 @@ body {
 }
 
 @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(50px, 50px) scale(1.1); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(50px, 50px) scale(1.1);
+    }
 }
 
 .glass {
@@ -110,7 +115,8 @@ body {
     height: 50px;
     width: auto;
     object-fit: contain;
-    mix-blend-mode: screen; /* Blends out the white background into the dark navbar */
+    mix-blend-mode: screen;
+    /* Blends out the white background into the dark navbar */
     filter: brightness(1.1) contrast(1.1);
     transition: all 0.3s ease;
 }
@@ -138,7 +144,8 @@ body {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover,
+.nav-links a.active {
     color: var(--accent-2);
 }
 
@@ -198,8 +205,15 @@ body {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .badge {
@@ -268,7 +282,7 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 2rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     color: white;
 }
 
@@ -292,8 +306,13 @@ body {
 }
 
 @keyframes float-card {
-    0% { transform: translateY(0) rotateY(-15deg) rotateX(5deg); }
-    100% { transform: translateY(-20px) rotateY(-5deg) rotateX(2deg); }
+    0% {
+        transform: translateY(0) rotateY(-15deg) rotateX(5deg);
+    }
+
+    100% {
+        transform: translateY(-20px) rotateY(-5deg) rotateX(2deg);
+    }
 }
 
 .card-header {
@@ -334,8 +353,8 @@ body {
 
 .btn-match {
     width: 100%;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 0.8rem;
     border-radius: 12px;
@@ -359,9 +378,17 @@ body {
     animation: fadeIn 1s forwards ease-out;
 }
 
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.delay-3 {
+    animation-delay: 0.6s;
+}
 
 @keyframes fadeInUp {
     to {
@@ -382,26 +409,26 @@ body {
         padding-top: 120px;
         text-align: center;
     }
-    
+
     .cta-group {
         justify-content: center;
     }
-    
+
     .nav-links {
         display: none;
     }
-    
+
     .hero-visual {
         margin-top: 4rem;
         width: 100%;
     }
-    
+
     .main-card {
         position: relative;
         transform: none;
         animation: none;
     }
-    
+
     .sub-card {
         display: none;
     }
@@ -455,13 +482,27 @@ body {
 }
 
 @keyframes pulse-preloader {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.1); opacity: 1; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
 }
 
 @keyframes load-progress {
-    0% { width: 0%; }
-    100% { width: 100%; }
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
 }
 
 /* Landing Page Sections */
@@ -534,7 +575,8 @@ body {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     justify-content: center;
     align-items: center;
     z-index: 10000;

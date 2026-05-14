@@ -87,11 +87,12 @@ const AuthModal = ({ isOpen, onClose }) => {
   );
 };
 
-function App() {
+const AppContent = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { getCurrentUser } = useLocalBackend();
   const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCurrentUser(getCurrentUser());
@@ -116,7 +117,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <>
       {loading && (
         <div id="preloader">
           <div className="preloader-content">
@@ -134,16 +135,15 @@ function App() {
         <div className="blob blob-3"></div>
       </div>
 
-      <Navbar onGetStarted={() => setIsModalOpen(true)} currentUser={currentUser} />
+      <Navbar onGetStarted={() => navigate('/therapy')} currentUser={currentUser} />
       
       <Routes>
-        <Route path="/" element={<Home onGetStarted={() => setIsModalOpen(true)} />} />
+        <Route path="/" element={<Home onGetStarted={() => navigate('/therapy')} />} />
         <Route path="/therapy" element={<Therapy />} />
         <Route path="/about" element={<About />} />
         <Route path="/features" element={<Features />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
-        {/* Add more routes here */}
       </Routes>
 
       <Footer />
@@ -155,6 +155,14 @@ function App() {
           setCurrentUser(getCurrentUser());
         }} 
       />
+    </>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

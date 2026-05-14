@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,7 +48,7 @@
             justify-content: center;
             font-size: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .feature-card h3 {
@@ -78,7 +79,7 @@
 
         .showcase-section {
             padding: 100px 5%;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             margin-top: 80px;
         }
 
@@ -117,8 +118,15 @@
         }
 
         @keyframes pulse-node {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.5); opacity: 0.8; }
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0.8;
+            }
         }
 
         @media (max-width: 968px) {
@@ -126,6 +134,7 @@
                 flex-direction: column;
                 text-align: center;
             }
+
             .showcase-visual {
                 width: 100%;
                 height: 300px;
@@ -133,6 +142,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="background-effects">
         <div class="blob blob-1"></div>
@@ -157,9 +167,12 @@
     <main>
         <section class="features-hero">
             <div class="badge fade-in-up">The Ecosystem</div>
-            <h1 class="fade-in-up delay-1" style="font-size: 4rem;">Empower Your <span class="text-gradient">Inner World</span></h1>
-            <p class="fade-in-up delay-2" style="max-width: 700px; margin: 1.5rem auto; color: var(--text-secondary); font-size: 1.2rem;">
-                Explore the tools designed to help you understand, express, and connect through the spectrum of human emotion.
+            <h1 class="fade-in-up delay-1" style="font-size: 4rem;">Empower Your <span class="text-gradient">Inner
+                    World</span></h1>
+            <p class="fade-in-up delay-2"
+                style="max-width: 700px; margin: 1.5rem auto; color: var(--text-secondary); font-size: 1.2rem;">
+                Explore the tools designed to help you understand, express, and connect through the spectrum of human
+                emotion.
             </p>
         </section>
 
@@ -168,42 +181,48 @@
                 <div class="feature-visual-bg"></div>
                 <div class="feature-icon">🧠</div>
                 <h3>AI Therapist (Aria)</h3>
-                <p>Engage in 24/7 private, judgment-free conversations with Aria, our advanced emotional AI trained in CBT and mindfulness techniques.</p>
+                <p>Engage in 24/7 private, judgment-free conversations with Aria, our advanced emotional AI trained in
+                    CBT and mindfulness techniques.</p>
             </div>
-            
+
             <div class="glass-card feature-card fade-in-up delay-2">
                 <div class="feature-visual-bg"></div>
                 <div class="feature-icon">📊</div>
                 <h3>Mood Insights</h3>
-                <p>Visualize your emotional journey over time. Discover patterns in your mood and receive personalized suggestions for mental clarity.</p>
+                <p>Visualize your emotional journey over time. Discover patterns in your mood and receive personalized
+                    suggestions for mental clarity.</p>
             </div>
 
             <div class="glass-card feature-card fade-in-up delay-3">
                 <div class="feature-visual-bg"></div>
                 <div class="feature-icon">🎭</div>
                 <h3>Mood Matching</h3>
-                <p>Anonymously connect with individuals currently experiencing similar emotions. Share the burden or multiply the joy in real-time.</p>
+                <p>Anonymously connect with individuals currently experiencing similar emotions. Share the burden or
+                    multiply the joy in real-time.</p>
             </div>
 
             <div class="glass-card feature-card fade-in-up delay-1">
                 <div class="feature-visual-bg"></div>
                 <div class="feature-icon">🌬️</div>
                 <h3>Box Breathing</h3>
-                <p>Interactive, guided breathing exercises integrated directly into the dashboard to help you regain focus and calm your nervous system.</p>
+                <p>Interactive, guided breathing exercises integrated directly into the dashboard to help you regain
+                    focus and calm your nervous system.</p>
             </div>
 
             <div class="glass-card feature-card fade-in-up delay-2">
                 <div class="feature-visual-bg"></div>
                 <div class="feature-icon">🔒</div>
                 <h3>Radical Privacy</h3>
-                <p>Your emotional data is your own. We use end-to-end encryption for all conversations and anonymous identities for mood matching.</p>
+                <p>Your emotional data is your own. We use end-to-end encryption for all conversations and anonymous
+                    identities for mood matching.</p>
             </div>
 
             <div class="glass-card feature-card fade-in-up delay-3">
                 <div class="feature-visual-bg"></div>
                 <div class="feature-icon">🌈</div>
                 <h3>Safe Circles</h3>
-                <p>Join moderated, interest-based communities where empathy is the only language. No reels, no filters, just real connection.</p>
+                <p>Join moderated, interest-based communities where empathy is the only language. No reels, no filters,
+                    just real connection.</p>
             </div>
         </section>
 
@@ -211,7 +230,7 @@
         <section class="landing-section ai-demo-section" style="text-align: center;">
             <div class="badge">Live Demo</div>
             <h2 style="font-size: 3rem; margin-bottom: 3rem;">Talk to <span class="text-gradient">Aria AI</span></h2>
-            
+
             <div class="glass-card ai-chat-container fade-in-up">
                 <div id="chat-messages" class="chat-display">
                     <div class="message ai">Hi, I'm Aria. I'm here to listen. How are you feeling right now?</div>
@@ -226,9 +245,11 @@
         <section class="showcase-section">
             <div class="showcase-container">
                 <div class="showcase-text fade-in-up">
-                    <h2 style="font-size: 2.8rem; margin-bottom: 1.5rem;">Powered by <span class="text-gradient">Emotional AI</span></h2>
+                    <h2 style="font-size: 2.8rem; margin-bottom: 1.5rem;">Powered by <span
+                            class="text-gradient">Emotional AI</span></h2>
                     <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem; margin-bottom: 2rem;">
-                        Our proprietary algorithms don't just process text; they understand sentiment, intensity, and context. Moodlink helps you find the right words when they feel out of reach.
+                        Our proprietary algorithms don't just process text; they understand sentiment, intensity, and
+                        context. Moodlink helps you find the right words when they feel out of reach.
                     </p>
                     <button class="btn-primary">Learn about our tech</button>
                 </div>
@@ -260,7 +281,7 @@
         scene.add(group);
 
         const colors = [0xff2a85, 0x8a2be2, 0x00d2ff, 0x00ff88];
-        for(let i=0; i < 40; i++) {
+        for (let i = 0; i < 40; i++) {
             const size = Math.random() * 0.1 + 0.05;
             const geometry = new THREE.SphereGeometry(size, 16, 16);
             const material = new THREE.MeshStandardMaterial({
@@ -315,7 +336,7 @@
 
         async function sendMessage() {
             const text = chatInput.value.trim();
-            if(!text) return;
+            if (!text) return;
 
             // Add user message
             addMessage(text, 'user');
@@ -328,7 +349,7 @@
                     body: JSON.stringify({ message: text })
                 });
                 const data = await response.json();
-                
+
                 // Add AI response
                 setTimeout(() => {
                     addMessage(data.reply, 'ai');
@@ -358,8 +379,9 @@
 
         sendBtn.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') sendMessage();
+            if (e.key === 'Enter') sendMessage();
         });
     </script>
 </body>
+
 </html>

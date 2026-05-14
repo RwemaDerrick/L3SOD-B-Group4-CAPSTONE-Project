@@ -57,15 +57,9 @@ body {
   background: var(--warm-white);
   z-index: 10;
 }
-.logo { display: flex; align-items: center; gap: 10px; }
-.logo-mark {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--sage), var(--lavender));
-  display: flex; align-items: center; justify-content: center;
-}
-.logo-mark svg { width: 18px; height: 18px; fill: white; }
-.logo-name { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text-main); letter-spacing: -0.3px; }
-.logo-name span { color: var(--sage-dark); }
+.logo { display: flex; align-items: center; cursor: pointer; }
+.logo img { height: 42px; width: auto; object-fit: contain; filter: brightness(1.1); transition: transform 0.3s ease; }
+.logo:hover img { transform: scale(1.05); }
 .streak-badge {
   display: flex; align-items: center; gap: 5px;
   background: var(--amber); color: var(--amber-dark);
@@ -276,11 +270,8 @@ input[type=range] {
 
   <!-- HEADER -->
   <div class="header">
-    <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24"><path d="M12 3C8 3 4 6.5 4 11c0 5 5 9 8 10 3-1 8-5 8-10 0-4.5-4-8-8-8z"/></svg>
-      </div>
-      <span class="logo-name">Mood<span>Link</span></span>
+    <div class="logo" onclick="location.href='index.html'">
+      <img src="Assets/logo.png" alt="MoodLink Logo">
     </div>
     <div class="streak-badge">🔥 7 day streak</div>
   </div>
@@ -673,6 +664,15 @@ weekData.forEach((v, i) => {
   bar.style.background = weekColors[i];
   wrap.appendChild(bar);
   chart.appendChild(wrap);
+});
+
+// Handle initial hash for deep linking
+window.addEventListener('load', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (['home', 'chat', 'breathe', 'insights'].includes(hash)) {
+    showScreen(hash);
+    if (hash === 'breathe') startBreathing();
+  }
 });
 </script>
 

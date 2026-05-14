@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
             position: relative;
             border-radius: 30px;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             transition: transform 0.5s ease;
         }
 
@@ -75,12 +76,14 @@
                 grid-template-columns: 1fr;
                 text-align: center;
             }
+
             .about-image {
                 order: -1;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="background-effects">
         <div class="blob blob-1"></div>
@@ -106,15 +109,19 @@
         <section class="about-section">
             <div class="badge fade-in-up">Our Story</div>
             <h1 class="fade-in-up delay-1">Pioneering <span class="text-gradient">Emotional Intelligence</span></h1>
-            
+
             <div class="about-grid">
                 <div class="about-content fade-in-up delay-2">
                     <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Why Moodlink?</h2>
                     <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 2rem;">
-                        Moodlink was born from a simple observation: in an increasingly connected world, we are feeling more isolated than ever. Traditional social media focuses on the highlight reel; Moodlink focuses on the real you.
+                        Moodlink was born from a simple observation: in an increasingly connected world, we are feeling
+                        more isolated than ever. Traditional social media focuses on the highlight reel; Moodlink
+                        focuses on the real you.
                     </p>
                     <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8;">
-                        We believe that every emotion—whether it's joy, sorrow, anxiety, or excitement—is a bridge to connection. Our AI-driven platform helps you navigate your emotional landscape and find others who truly understand your current state of mind.
+                        We believe that every emotion—whether it's joy, sorrow, anxiety, or excitement—is a bridge to
+                        connection. Our AI-driven platform helps you navigate your emotional landscape and find others
+                        who truly understand your current state of mind.
                     </p>
                     <div class="cta-group" style="margin-top: 3rem;">
                         <button class="btn-primary glow">Join the Movement</button>
@@ -134,12 +141,14 @@
                 <div class="glass-card value-card fade-in-up delay-2">
                     <div class="value-icon">🤝</div>
                     <h3>True Empathy</h3>
-                    <p>Our algorithms are designed to foster genuine understanding, not just surface-level interactions.</p>
+                    <p>Our algorithms are designed to foster genuine understanding, not just surface-level interactions.
+                    </p>
                 </div>
                 <div class="glass-card value-card fade-in-up delay-3">
                     <div class="value-icon">⚡</div>
                     <h3>Real-time Connection</h3>
-                    <p>Find your emotional match in seconds, when you need it most, without the noise of traditional social media.</p>
+                    <p>Find your emotional match in seconds, when you need it most, without the noise of traditional
+                        social media.</p>
                 </div>
             </div>
         </section>
@@ -166,7 +175,7 @@
         const particlesCount = 100;
         const posArray = new Float32Array(particlesCount * 3);
 
-        for(let i=0; i < particlesCount * 3; i++) {
+        for (let i = 0; i < particlesCount * 3; i++) {
             posArray[i] = (Math.random() - 0.5) * 10;
         }
 
@@ -197,15 +206,15 @@
             // Simple line connection logic (visual only)
             const positions = particlesGeometry.attributes.position.array;
             const linePositions = [];
-            for(let i=0; i < particlesCount; i++) {
-                for(let j=i+1; j < particlesCount; j++) {
-                    const dx = positions[i*3] - positions[j*3];
-                    const dy = positions[i*3+1] - positions[j*3+1];
-                    const dz = positions[i*3+2] - positions[j*3+2];
-                    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
-                    if(dist < 2.5) {
-                        linePositions.push(positions[i*3], positions[i*3+1], positions[i*3+2]);
-                        linePositions.push(positions[j*3], positions[j*3+1], positions[j*3+2]);
+            for (let i = 0; i < particlesCount; i++) {
+                for (let j = i + 1; j < particlesCount; j++) {
+                    const dx = positions[i * 3] - positions[j * 3];
+                    const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+                    const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+                    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                    if (dist < 2.5) {
+                        linePositions.push(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+                        linePositions.push(positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]);
                     }
                 }
             }
@@ -233,4 +242,5 @@
         });
     </script>
 </body>
-</html>
+
+</html>

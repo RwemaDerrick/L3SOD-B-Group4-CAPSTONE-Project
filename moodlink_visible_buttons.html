@@ -6,8 +6,9 @@
   .root{font-family:'Nunito',sans-serif;background:#f0eaf8;color:#1e1030;}
 
   .nav{background:#1e1030;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:50;}
-  .logo{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:#d4b8ff;}
-  .logo span{color:#7c4dff;}
+  .logo{cursor:pointer;display:flex;align-items:center;}
+  .logo img{height:45px;width:auto;object-fit:contain;transition:transform 0.2s;}
+  .logo:hover img{transform:scale(1.05);}
   .nav-links{display:flex;gap:16px;list-style:none;flex-wrap:wrap;}
   .nav-links a{color:#e0d0ff;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;background:#2e1a50;padding:5px 13px;border-radius:20px;transition:background 0.2s;}
   .nav-links a:hover{background:#7c4dff;color:#fff;}
@@ -136,7 +137,8 @@
   .chat-send:hover{background:#6030e0;}
 
   .footer{background:#1e1030;padding:2.5rem 2rem;text-align:center;}
-  .footer-logo{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:#d4b8ff;margin-bottom:0.4rem;}
+  .footer-logo{margin-bottom:1rem;cursor:pointer;}
+  .footer-logo img{height:50px;width:auto;object-fit:contain;}
   .footer-sub{font-size:12px;color:#6040a0;margin-bottom:1.25rem;}
   .footer-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
   .footer-links a{color:#e0d0ff;font-size:12px;text-decoration:none;cursor:pointer;background:#2e1a50;padding:5px 13px;border-radius:20px;font-weight:600;transition:background 0.2s;}
@@ -172,16 +174,9 @@
     z-index: 50;
   }
 
-  .logo {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 900;
-    color: #d4b8ff;
-  }
-
-  .logo span {
-    color: #7c4dff;
-  }
+  .logo{cursor:pointer;display:flex;align-items:center;}
+  .logo img{height:45px;width:auto;object-fit:contain;transition:transform 0.2s;}
+  .logo:hover img{transform:scale(1.05);}
 
   .nav-links {
     display: flex;
@@ -1077,7 +1072,7 @@
 <div class="root" id="app">
 
   <nav class="nav">
-    <div class="logo">Mood<span>Link</span></div>
+    <div class="logo" onclick="location.href='index.html'"><img src="Assets/logo.png" alt="MoodLink Logo"></div>
     <ul class="nav-links">
       <li><a onclick="showPage('home')">Home</a></li>
       <li><a onclick="showPage('whats-mud')">What's mud?</a></li>

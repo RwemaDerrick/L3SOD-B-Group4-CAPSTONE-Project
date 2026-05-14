@@ -140,7 +140,7 @@ const Home = ({ onGetStarted }) => {
               {user ? (
                 <button className="btn-primary glow" onClick={() => navigate('/therapy')}>Go to Dashboard</button>
               ) : (
-                <button className="btn-primary glow" onClick={onGetStarted}>Find a Match</button>
+                <button className="btn-primary glow" onClick={() => navigate('/therapy')}>Find a Match</button>
               )}
               <button className="btn-secondary">Learn More</button>
             </div>
@@ -263,7 +263,7 @@ const Home = ({ onGetStarted }) => {
         {user ? (
           <button className="btn-primary btn-large glow" onClick={() => navigate('/therapy')}>Go to Dashboard</button>
         ) : (
-          <button className="btn-primary btn-large glow" onClick={onGetStarted}>Join Moodlink Now</button>
+          <button className="btn-primary btn-large glow" onClick={() => navigate('/therapy')}>Join Moodlink Now</button>
         )}
       </section>
     </main>
