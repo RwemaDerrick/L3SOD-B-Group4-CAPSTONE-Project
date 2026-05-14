@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function EmotionSupportHomepage() {
   const services = [
     {
@@ -43,7 +45,71 @@ export default function EmotionSupportHomepage() {
     },
   ];
 
-  return (
+  return (// Keyboard Navigation Shortcuts
+    React.useEffect(() => {
+
+      const handleKeyPress = (event) => {
+
+        // Ignore typing inside inputs
+        const tag = document.activeElement.tagName;
+
+        if (
+          tag === "INPUT" ||
+          tag === "TEXTAREA"
+        ) {
+          return;
+        }
+
+        const key = event.key.toLowerCase();
+
+        // Sections
+        if (key === "h") {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+
+        if (key === "a") {
+          document
+            .querySelector("section:nth-of-type(4)")
+            ?.scrollIntoView({
+              behavior: "smooth",
+            });
+        }
+
+        if (key === "s") {
+          document
+            .querySelector("section:nth-of-type(2)")
+            ?.scrollIntoView({
+              behavior: "smooth",
+            });
+        }
+
+        if (key === "r") {
+          document
+            .querySelector("section:nth-of-type(5)")
+            ?.scrollIntoView({
+              behavior: "smooth",
+            });
+        }
+
+        if (key === "c") {
+          document
+            .querySelector("footer")
+            ?.scrollIntoView({
+              behavior: "smooth",
+            });
+        }
+      };
+
+      document.addEventListener("keydown", handleKeyPress);
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyPress);
+      };
+
+    }, []),
     <div className="bg-[#f7f6fb] text-gray-900 min-h-screen font-sans">
       {/* NAVBAR */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
