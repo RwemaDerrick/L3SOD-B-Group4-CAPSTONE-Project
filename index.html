@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="Style.css">
 </head>
 <body>
+    <div id="preloader">
+        <div class="preloader-content">
+            <img src="Assets/logo.png" alt="Moodlinks Logo" class="pulse-logo">
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="background-effects">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
@@ -171,10 +180,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             const heroTitle = document.querySelector('.hero-content h1');
             if (heroTitle) {
-                // Prepare title for typewriter (remove fade-in class if needed)
                 heroTitle.classList.remove('fade-in-up', 'delay-1');
                 setupTypewriter(heroTitle);
             }
+
+            // --- Preloader Fade Out ---
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+            }, 2000);
         });
 
         // --- Three.js 3D Mind Sphere ---

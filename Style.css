@@ -399,6 +399,61 @@ body {
     }
 }
 
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#preloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.pulse-logo {
+    height: 80px;
+    margin-bottom: 2rem;
+    animation: pulse-preloader 2s infinite ease-in-out;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, var(--accent-1), var(--accent-2));
+    animation: load-progress 2s forwards ease-in-out;
+}
+
+@keyframes pulse-preloader {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes load-progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
 /* Landing Page Sections */
 .landing-section {
     padding: 100px 5%;
