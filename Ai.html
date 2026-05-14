@@ -1,229 +1,236 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MoodLink — AI Emotional Therapy</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --sage: #7DAA92;
-  --sage-light: #C2D9CC;
-  --sage-dark: #3D6B56;
-  --blush: #E8C4B8;
-  --blush-dark: #B5826E;
-  --lavender: #C3B8D9;
-  --lavender-dark: #7B6FA8;
-  --sky: #B8D3E8;
-  --amber: #E8D5A0;
-  --amber-dark: #9E7E35;
-  --warm-white: #FAF8F5;
-  --soft-gray: #EAE8E4;
-  --text-main: #2C2C2A;
-  --text-muted: #7A7872;
-  --text-hint: #AEACA6;
+  --bg: #0a0510;
+  --text-primary: #ffffff;
+  --text-secondary: #a395b0;
+  --accent-1: #8a2be2;
+  --accent-2: #ff2a85;
+  --glass-bg: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-border-strong: rgba(255,255,255,0.18);
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--warm-white);
-  color: var(--text-main);
+  font-family: 'Outfit', 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
+}
+
+.bg-blobs {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none; overflow: hidden;
+}
+.blob {
+  position: absolute; filter: blur(90px); border-radius: 50%; opacity: 0.5;
+  animation: blob-float 18s infinite ease-in-out alternate;
+}
+.blob-1 { top: -10%; left: -10%; width: 55vw; height: 55vw; background: radial-gradient(circle, var(--accent-1), transparent 70%); }
+.blob-2 { bottom: -20%; right: -10%; width: 65vw; height: 65vw; background: radial-gradient(circle, var(--accent-2), transparent 70%); animation-delay: -6s; }
+.blob-3 { top: 35%; left: 42%; width: 40vw; height: 40vw; background: radial-gradient(circle, #4a00e0, transparent 70%); animation-delay: -12s; }
+@keyframes blob-float {
+  0% { transform: translate(0,0) scale(1); }
+  100% { transform: translate(40px,40px) scale(1.08); }
 }
 
 .app {
-  max-width: 480px;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--warm-white);
-  position: relative;
+  max-width: 480px; width: 100%; min-height: 100vh;
+  display: flex; flex-direction: column;
+  position: relative; z-index: 1;
 }
 
-/* ── HEADER ── */
 .header {
-  padding: 20px 24px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 0.5px solid var(--soft-gray);
-  position: sticky;
-  top: 0;
-  background: var(--warm-white);
+  padding: 18px 24px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 0.5px solid var(--glass-border);
+  position: sticky; top: 0;
+  background: rgba(10,5,16,0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   z-index: 10;
 }
 .logo { display: flex; align-items: center; gap: 10px; }
 .logo-mark {
   width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--sage), var(--lavender));
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
   display: flex; align-items: center; justify-content: center;
 }
 .logo-mark svg { width: 18px; height: 18px; fill: white; }
-.logo-name { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text-main); letter-spacing: -0.3px; }
-.logo-name span { color: var(--sage-dark); }
+.logo-name { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: white; }
+.logo-name span { color: var(--accent-2); }
 .streak-badge {
   display: flex; align-items: center; gap: 5px;
-  background: var(--amber); color: var(--amber-dark);
-  font-size: 12px; font-weight: 500;
+  background: rgba(232,213,160,0.12); color: #f0c060;
+  border: 1px solid rgba(232,213,160,0.2);
+  font-size: 12px; font-weight: 600;
   padding: 5px 10px; border-radius: 20px;
 }
 
-/* ── SCREENS ── */
-.screen {
-  display: none;
-  flex-direction: column;
-  flex: 1;
-  padding: 24px;
-  animation: fadeIn 0.3s ease;
-  overflow-y: auto;
-}
+.screen { display: none; flex-direction: column; flex: 1; padding: 24px; animation: fadeIn 0.3s ease; overflow-y: auto; }
 .screen.active { display: flex; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
 
-/* ── HOME ── */
+/* HOME */
 .greeting { margin-bottom: 24px; }
-.greeting-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
-.greeting-main { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.25; color: var(--text-main); }
-.greeting-main em { color: var(--sage-dark); font-style: italic; }
+.greeting-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; letter-spacing: 0.8px; text-transform: uppercase; }
+.greeting-main { font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.2; color: white; }
+.greeting-main em { background: linear-gradient(to right, var(--accent-2), #ff8a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-style: italic; }
 
-.mood-section-title { font-size: 12px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 14px; }
+.section-title { font-size: 11px; font-weight: 600; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
 
-.mood-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+.mood-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 24px; }
 .mood-btn {
   display: flex; flex-direction: column; align-items: center; gap: 6px;
-  padding: 14px 8px; border-radius: 16px;
-  border: 1.5px solid transparent;
+  padding: 13px 6px; border-radius: 14px;
+  border: 1px solid var(--glass-border);
   cursor: pointer; transition: all 0.2s;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
 }
-.mood-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.mood-btn.selected { border-color: var(--sage); background: #F0F7F3; }
-.mood-emoji { font-size: 24px; }
-.mood-label { font-size: 11px; font-weight: 500; color: var(--text-muted); }
-.mood-btn.selected .mood-label { color: var(--sage-dark); }
+.mood-btn:hover { transform: translateY(-2px); border-color: var(--glass-border-strong); background: rgba(255,255,255,0.09); }
+.mood-btn.selected { border-color: var(--accent-2); background: rgba(255,42,133,0.12); }
+.mood-emoji { font-size: 22px; }
+.mood-label { font-size: 10px; font-weight: 600; color: var(--text-secondary); }
+.mood-btn.selected .mood-label { color: var(--accent-2); }
 
-.intensity-block { margin-bottom: 24px; }
+.intensity-block { margin-bottom: 22px; }
 .intensity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.intensity-val { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--sage-dark); }
-.intensity-bar-wrap { position: relative; height: 6px; background: var(--soft-gray); border-radius: 3px; }
-.intensity-fill { position: absolute; height: 100%; border-radius: 3px; background: linear-gradient(to right, var(--blush), var(--sage)); transition: width 0.3s; pointer-events: none; }
-input[type=range] {
-  position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; top: 0; left: 0;
+.intensity-label { font-size: 13px; color: var(--text-secondary); }
+.intensity-val { font-size: 22px; font-weight: 800; background: linear-gradient(to right, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.intensity-bar-wrap { position: relative; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; }
+.intensity-fill { position: absolute; height: 100%; border-radius: 3px; background: linear-gradient(to right, var(--accent-1), var(--accent-2)); transition: width 0.3s; pointer-events: none; }
+input[type=range] { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; top: 0; left: 0; }
+
+.context-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.context-pill {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px;
+  border: 1px solid var(--glass-border); background: var(--glass-bg); cursor: pointer;
+  transition: all 0.18s; color: var(--text-secondary); font-weight: 400;
 }
+.context-pill.selected { background: rgba(138,43,226,0.2); border-color: var(--accent-1); color: #c89af5; font-weight: 600; }
 
 .journal-area {
-  width: 100%; min-height: 90px; resize: none;
-  border: 1px solid var(--soft-gray); border-radius: 12px;
-  padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px;
-  color: var(--text-main); background: white; line-height: 1.6;
+  width: 100%; min-height: 80px; resize: none;
+  border: 1px solid var(--glass-border); border-radius: 12px;
+  padding: 12px 14px; font-family: 'Outfit','DM Sans',sans-serif; font-size: 14px;
+  color: white; background: var(--glass-bg);
+  backdrop-filter: blur(10px); line-height: 1.6;
   transition: border-color 0.2s; margin-bottom: 16px;
 }
-.journal-area:focus { outline: none; border-color: var(--sage); }
-.journal-area::placeholder { color: var(--text-hint); }
+.journal-area:focus { outline: none; border-color: var(--accent-1); }
+.journal-area::placeholder { color: rgba(255,255,255,0.25); }
 
 .btn-primary {
-  width: 100%; padding: 15px; border-radius: 14px;
-  background: var(--sage-dark); color: white;
-  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
-  border: none; cursor: pointer; transition: all 0.2s;
-  letter-spacing: 0.2px;
+  width: 100%; padding: 14px; border-radius: 30px;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: white; font-family: 'Outfit',sans-serif; font-size: 15px; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.2s; letter-spacing: 0.2px;
+  box-shadow: 0 4px 20px rgba(255,42,133,0.3);
 }
-.btn-primary:hover { background: #2E5444; transform: translateY(-1px); }
-.btn-primary:active { transform: scale(0.99); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(255,42,133,0.45); }
 
 .btn-secondary {
-  padding: 10px 20px; border-radius: 10px;
-  background: transparent; color: var(--text-muted);
-  font-family: 'DM Sans', sans-serif; font-size: 14px;
-  border: 1px solid var(--soft-gray); cursor: pointer; transition: all 0.2s;
+  padding: 8px 16px; border-radius: 20px;
+  background: var(--glass-bg); color: var(--text-secondary);
+  font-family: 'Outfit',sans-serif; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.2s;
 }
-.btn-secondary:hover { background: var(--soft-gray); }
+.btn-secondary:hover { background: rgba(255,255,255,0.1); color: white; }
 
-.quick-tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 8px; }
+.quick-tools { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 8px; }
 .tool-card {
-  padding: 14px 12px; border-radius: 14px; border: 1px solid var(--soft-gray);
-  background: white; cursor: pointer; transition: all 0.2s; text-align: center;
+  padding: 14px 10px; border-radius: 14px;
+  border: 1px solid var(--glass-border); background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  cursor: pointer; transition: all 0.2s; text-align: center;
 }
-.tool-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+.tool-card:hover { transform: translateY(-2px); border-color: var(--glass-border-strong); background: rgba(255,255,255,0.08); }
 .tool-icon { font-size: 22px; margin-bottom: 6px; }
-.tool-name { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+.tool-name { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
 
-.context-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-.context-pill {
-  padding: 7px 14px; border-radius: 20px; font-size: 13px;
-  border: 1.5px solid var(--soft-gray); background: white; cursor: pointer;
-  transition: all 0.18s; color: var(--text-muted); font-weight: 400;
-}
-.context-pill.selected { background: #EEF5F1; border-color: var(--sage); color: var(--sage-dark); font-weight: 500; }
-
-/* ── CHAT ── */
+/* CHAT */
 #screen-chat { padding-bottom: 0; }
-
 .chat-header {
   display: flex; align-items: center; gap: 12px;
-  margin-bottom: 20px; padding-bottom: 16px;
-  border-bottom: 0.5px solid var(--soft-gray);
+  margin-bottom: 18px; padding-bottom: 14px;
+  border-bottom: 0.5px solid var(--glass-border);
 }
 .therapist-avatar {
   width: 42px; height: 42px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--lavender), var(--sage-light));
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0;
+  box-shadow: 0 0 16px rgba(138,43,226,0.4);
 }
-.therapist-info .name { font-weight: 500; font-size: 15px; }
-.therapist-info .status { font-size: 12px; color: var(--sage-dark); display: flex; align-items: center; gap: 4px; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); display: inline-block; }
+.therapist-info .name { font-weight: 600; font-size: 15px; color: white; }
+.therapist-info .status { font-size: 12px; color: var(--accent-2); display: flex; align-items: center; gap: 4px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: inline-block; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
 .messages-wrap {
-  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
-  margin-bottom: 16px; min-height: 300px; max-height: 55vh; padding-right: 4px;
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 14px; min-height: 280px; max-height: 52vh; padding-right: 4px;
 }
 .messages-wrap::-webkit-scrollbar { width: 3px; }
-.messages-wrap::-webkit-scrollbar-thumb { background: var(--soft-gray); border-radius: 3px; }
+.messages-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
-.msg { display: flex; gap: 10px; max-width: 88%; }
+.msg { display: flex; gap: 8px; max-width: 88%; }
 .msg.user { flex-direction: row-reverse; align-self: flex-end; }
-.msg-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.6; }
-.msg.ai .msg-bubble { background: white; border: 0.5px solid var(--soft-gray); border-radius: 4px 18px 18px 18px; color: var(--text-main); }
-.msg.user .msg-bubble { background: var(--sage-dark); color: white; border-radius: 18px 4px 18px 18px; }
-.msg-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--lavender), var(--sage-light)); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.msg-bubble { padding: 11px 15px; border-radius: 18px; font-size: 14px; line-height: 1.6; }
+.msg.ai .msg-bubble { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 4px 18px 18px 18px; color: rgba(255,255,255,0.9); backdrop-filter: blur(10px); }
+.msg.user .msg-bubble { background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); color: white; border-radius: 18px 4px 18px 18px; }
+.msg-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
 
-.typing-indicator { display: flex; gap: 4px; padding: 14px 16px; background: white; border: 0.5px solid var(--soft-gray); border-radius: 4px 18px 18px 18px; width: fit-content; }
-.typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-hint); animation: typingPulse 1.2s infinite; }
+.typing-indicator { display: flex; gap: 4px; padding: 12px 15px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 4px 18px 18px 18px; width: fit-content; }
+.typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-secondary); animation: typingPulse 1.2s infinite; }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingPulse { 0%,60%,100% { transform: scale(1); opacity: 0.5; } 30% { transform: scale(1.3); opacity: 1; } }
+@keyframes typingPulse { 0%,60%,100%{transform:scale(1);opacity:0.4;} 30%{transform:scale(1.3);opacity:1;} }
 
 .chat-input-row { display: flex; gap: 8px; align-items: flex-end; padding-bottom: 16px; }
 .chat-input {
-  flex: 1; min-height: 44px; max-height: 120px; resize: none;
-  border: 1px solid var(--soft-gray); border-radius: 12px;
-  padding: 11px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px;
-  color: var(--text-main); background: white; line-height: 1.5;
+  flex: 1; min-height: 44px; max-height: 110px; resize: none;
+  border: 1px solid var(--glass-border); border-radius: 22px;
+  padding: 11px 16px; font-family: 'Outfit',sans-serif; font-size: 14px;
+  color: white; background: var(--glass-bg); backdrop-filter: blur(10px); line-height: 1.5;
 }
-.chat-input:focus { outline: none; border-color: var(--sage); }
+.chat-input:focus { outline: none; border-color: var(--accent-1); }
+.chat-input::placeholder { color: rgba(255,255,255,0.25); }
 .send-btn {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: var(--sage-dark); color: white; border: none;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: white; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.2s; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(138,43,226,0.4);
 }
-.send-btn:hover { background: #2E5444; }
+.send-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(255,42,133,0.5); }
 .send-btn svg { width: 18px; height: 18px; }
 
-/* ── BREATHE ── */
-.breathe-center { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 32px 0; }
-.breathe-ring-wrap { position: relative; width: 200px; height: 200px; margin-bottom: 32px; }
+/* BREATHE */
+.breathe-center { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 28px 0; }
+.breathe-ring-wrap { position: relative; width: 200px; height: 200px; margin-bottom: 28px; }
 .breathe-ring {
   width: 200px; height: 200px; border-radius: 50%;
-  background: radial-gradient(circle at center, rgba(125,170,146,0.2), rgba(195,184,217,0.3));
-  border: 2px solid var(--sage-light);
+  background: radial-gradient(circle, rgba(138,43,226,0.1), rgba(255,42,133,0.1));
+  border: 1.5px solid var(--glass-border-strong);
   display: flex; align-items: center; justify-content: center;
   transition: transform 4s ease-in-out;
 }
@@ -232,45 +239,54 @@ input[type=range] {
 .breathe-ring.shrink { transform: scale(1); }
 .breathe-ring-inner {
   width: 100px; height: 100px; border-radius: 50%;
-  background: radial-gradient(circle, var(--sage-light), var(--lavender));
+  background: linear-gradient(135deg, rgba(138,43,226,0.3), rgba(255,42,133,0.3));
+  border: 1px solid var(--glass-border);
   display: flex; align-items: center; justify-content: center;
 }
-.breathe-instruction { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--sage-dark); margin-bottom: 8px; text-align: center; }
-.breathe-count { font-size: 36px; font-weight: 300; color: var(--text-muted); margin-bottom: 24px; }
-.breathe-phase { font-size: 13px; color: var(--text-hint); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 32px; text-align: center; }
+.breathe-instruction { font-family: 'Outfit',sans-serif; font-size: 22px; font-weight: 800; color: white; margin-bottom: 6px; text-align: center; }
+.breathe-count { font-size: 36px; font-weight: 300; color: var(--text-secondary); margin-bottom: 20px; }
+.breathe-phase { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 28px; text-align: center; }
 .breathe-controls { display: flex; gap: 12px; }
 
-/* ── INSIGHTS ── */
-.insight-card { background: white; border: 0.5px solid var(--soft-gray); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
-.insight-card-title { font-weight: 500; font-size: 14px; margin-bottom: 12px; color: var(--text-main); }
+/* INSIGHTS */
+.insight-card { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(14px); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+.insight-card-title { font-weight: 600; font-size: 14px; margin-bottom: 12px; color: rgba(255,255,255,0.9); }
 .mood-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.mood-bar-label { font-size: 12px; color: var(--text-muted); width: 72px; flex-shrink: 0; }
-.mood-bar-track { flex: 1; height: 8px; background: var(--soft-gray); border-radius: 4px; overflow: hidden; }
-.mood-bar-fill { height: 100%; border-radius: 4px; }
-.mood-bar-pct { font-size: 12px; color: var(--text-hint); width: 30px; text-align: right; flex-shrink: 0; }
-.insight-tip { background: #F0F7F3; border-left: 3px solid var(--sage); border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13px; color: var(--sage-dark); line-height: 1.6; }
-
+.mood-bar-label { font-size: 12px; color: var(--text-secondary); width: 72px; flex-shrink: 0; }
+.mood-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.mood-bar-fill { height: 100%; border-radius: 3px; }
+.mood-bar-pct { font-size: 12px; color: rgba(255,255,255,0.3); width: 30px; text-align: right; flex-shrink: 0; }
+.insight-tip { background: rgba(138,43,226,0.12); border-left: 2px solid var(--accent-1); border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13px; color: #c89af5; line-height: 1.6; }
 .week-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
 .week-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
 .week-bar { width: 100%; border-radius: 6px 6px 0 0; min-height: 4px; }
 
-/* ── BOTTOM NAV ── */
+/* BOTTOM NAV */
 .bottom-nav {
   display: flex; padding: 12px 24px 20px; gap: 4px;
-  border-top: 0.5px solid var(--soft-gray); background: var(--warm-white);
+  border-top: 0.5px solid var(--glass-border);
+  background: rgba(10,5,16,0.75);
+  backdrop-filter: blur(18px);
   position: sticky; bottom: 0;
 }
 .nav-btn {
   flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 8px 4px; border-radius: 10px; border: none;
+  padding: 8px 4px; border-radius: 12px; border: none;
   background: transparent; cursor: pointer; transition: all 0.2s;
-  color: var(--text-hint); font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+  color: rgba(255,255,255,0.3); font-family: 'Outfit',sans-serif; font-size: 10px; font-weight: 600;
 }
-.nav-btn.active { background: #F0F7F3; color: var(--sage-dark); }
+.nav-btn.active { background: rgba(138,43,226,0.18); color: #c89af5; }
+.nav-btn:hover:not(.active) { color: rgba(255,255,255,0.6); }
 .nav-btn svg { width: 22px; height: 22px; }
 </style>
 </head>
 <body>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
 
 <div class="app">
 
@@ -285,15 +301,14 @@ input[type=range] {
     <div class="streak-badge">🔥 7 day streak</div>
   </div>
 
-  <!-- ════ HOME SCREEN ════ -->
+  <!-- HOME SCREEN -->
   <div class="screen active" id="screen-home">
-
     <div class="greeting">
       <div class="greeting-sub">Good afternoon</div>
       <div class="greeting-main">How are you <em>feeling</em> right now?</div>
     </div>
 
-    <div class="mood-section-title">Select your mood</div>
+    <div class="section-title">Select your mood</div>
     <div class="mood-grid">
       <button class="mood-btn" data-mood="Joyful"   onclick="selectMood(this)"><span class="mood-emoji">😊</span><span class="mood-label">Joyful</span></button>
       <button class="mood-btn" data-mood="Calm"     onclick="selectMood(this)"><span class="mood-emoji">😌</span><span class="mood-label">Calm</span></button>
@@ -305,10 +320,10 @@ input[type=range] {
       <button class="mood-btn" data-mood="Angry"    onclick="selectMood(this)"><span class="mood-emoji">😠</span><span class="mood-label">Angry</span></button>
     </div>
 
-    <div class="mood-section-title">Intensity</div>
+    <div class="section-title">Intensity</div>
     <div class="intensity-block">
       <div class="intensity-header">
-        <span style="font-size:13px;color:var(--text-muted)">How strong is this feeling?</span>
+        <span class="intensity-label">How strong is this feeling?</span>
         <span class="intensity-val" id="intensity-display">5</span>
       </div>
       <div class="intensity-bar-wrap">
@@ -317,7 +332,7 @@ input[type=range] {
       </div>
     </div>
 
-    <div class="mood-section-title">What's going on?</div>
+    <div class="section-title">What's going on?</div>
     <div class="context-pills">
       <span class="context-pill" onclick="togglePill(this)">Work</span>
       <span class="context-pill" onclick="togglePill(this)">Relationships</span>
@@ -331,8 +346,8 @@ input[type=range] {
     <textarea class="journal-area" id="journal-note" placeholder="Add a note — what's on your mind? (optional)"></textarea>
     <button class="btn-primary" onclick="startChat()">Talk to my AI therapist →</button>
 
-    <div style="margin-top:28px">
-      <div class="mood-section-title">Quick tools</div>
+    <div style="margin-top:26px">
+      <div class="section-title">Quick tools</div>
       <div class="quick-tools">
         <div class="tool-card" onclick="showScreen('breathe')">
           <div class="tool-icon">🌬️</div>
@@ -348,55 +363,45 @@ input[type=range] {
         </div>
       </div>
     </div>
+  </div>
 
-  </div><!-- /home -->
-
-  <!-- ════ CHAT SCREEN ════ -->
+  <!-- CHAT SCREEN -->
   <div class="screen" id="screen-chat" style="padding-bottom:0;">
-
     <div class="chat-header">
       <div class="therapist-avatar">🌿</div>
       <div class="therapist-info">
         <div class="name">Aria — Your AI Therapist</div>
         <div class="status"><span class="status-dot"></span> Here for you now</div>
       </div>
-      <button class="btn-secondary" onclick="showScreen('home')" style="margin-left:auto;font-size:12px;padding:7px 12px;">← Back</button>
+      <button class="btn-secondary" onclick="showScreen('home')" style="margin-left:auto;">← Back</button>
     </div>
-
     <div class="messages-wrap" id="messages">
       <div class="msg ai">
         <div class="msg-avatar">🌿</div>
         <div class="msg-bubble">Hi, I'm Aria 🌿 I'm here to listen and support you. This is a safe, judgment-free space. What would you like to talk about today?</div>
       </div>
     </div>
-
     <div class="chat-input-row">
       <textarea class="chat-input" id="chat-input" placeholder="Share what's on your mind..." rows="1" onkeydown="handleChatKey(event)"></textarea>
       <button class="send-btn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
       </button>
     </div>
+  </div>
 
-  </div><!-- /chat -->
-
-  <!-- ════ BREATHE SCREEN ════ -->
+  <!-- BREATHE SCREEN -->
   <div class="screen" id="screen-breathe">
-
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-      <span style="font-family:'DM Serif Display',serif;font-size:20px;">Box Breathing</span>
-      <button class="btn-secondary" onclick="stopBreathing();showScreen('home')" style="font-size:12px;padding:7px 12px;">← Back</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <span style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:white;">Box Breathing</span>
+      <button class="btn-secondary" onclick="stopBreathing();showScreen('home')">← Back</button>
     </div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;">A technique used by Navy SEALs to calm the nervous system.</p>
-
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:22px;">A technique used by Navy SEALs to calm the nervous system.</p>
     <div class="breathe-center">
       <div class="breathe-ring-wrap">
         <div class="breathe-ring" id="breathe-ring">
-          <div class="breathe-ring-inner">
-            <span style="font-size:28px;" id="breathe-emoji">🌬️</span>
-          </div>
+          <div class="breathe-ring-inner"><span style="font-size:26px;" id="breathe-emoji">🌬️</span></div>
         </div>
       </div>
       <div class="breathe-instruction" id="breathe-instruction">Ready?</div>
@@ -406,63 +411,57 @@ input[type=range] {
         <button class="btn-primary" id="breathe-btn" onclick="toggleBreathing()" style="width:140px;">Start</button>
       </div>
     </div>
+  </div>
 
-  </div><!-- /breathe -->
-
-  <!-- ════ INSIGHTS SCREEN ════ -->
+  <!-- INSIGHTS SCREEN -->
   <div class="screen" id="screen-insights">
-
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-      <span style="font-family:'DM Serif Display',serif;font-size:20px;">Your insights</span>
-      <button class="btn-secondary" onclick="showScreen('home')" style="font-size:12px;padding:7px 12px;">← Back</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <span style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:white;">Your insights</span>
+      <button class="btn-secondary" onclick="showScreen('home')">← Back</button>
     </div>
-
     <div class="insight-card">
       <div class="insight-card-title">This week's mood</div>
       <div class="week-chart" id="week-chart"></div>
       <div style="display:flex;justify-content:space-between;margin-top:6px;">
-        <span style="font-size:11px;color:var(--text-hint)">Mon</span>
-        <span style="font-size:11px;color:var(--text-hint)">Tue</span>
-        <span style="font-size:11px;color:var(--text-hint)">Wed</span>
-        <span style="font-size:11px;color:var(--text-hint)">Thu</span>
-        <span style="font-size:11px;color:var(--text-hint)">Fri</span>
-        <span style="font-size:11px;color:var(--text-hint)">Sat</span>
-        <span style="font-size:11px;color:var(--text-hint)">Sun</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Mon</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Tue</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Wed</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Thu</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Fri</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Sat</span>
+        <span style="font-size:11px;color:rgba(255,255,255,0.2)">Sun</span>
       </div>
     </div>
-
     <div class="insight-card">
       <div class="insight-card-title">Most frequent emotions</div>
       <div class="mood-bar-row">
         <span class="mood-bar-label">😌 Calm</span>
-        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:74%;background:var(--sage);"></div></div>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:74%;background:linear-gradient(to right,#8a2be2,#ff2a85);"></div></div>
         <span class="mood-bar-pct">74%</span>
       </div>
       <div class="mood-bar-row">
         <span class="mood-bar-label">😰 Anxious</span>
-        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:52%;background:var(--lavender-dark);"></div></div>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:52%;background:linear-gradient(to right,#4a00e0,#8a2be2);"></div></div>
         <span class="mood-bar-pct">52%</span>
       </div>
       <div class="mood-bar-row">
         <span class="mood-bar-label">😊 Joyful</span>
-        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:40%;background:var(--amber-dark);"></div></div>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:40%;background:linear-gradient(to right,#ff8a00,#ff2a85);"></div></div>
         <span class="mood-bar-pct">40%</span>
       </div>
       <div class="mood-bar-row">
         <span class="mood-bar-label">😔 Sad</span>
-        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:22%;background:var(--sky);"></div></div>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:22%;background:rgba(163,149,176,0.6);"></div></div>
         <span class="mood-bar-pct">22%</span>
       </div>
     </div>
-
     <div class="insight-card">
       <div class="insight-card-title">Aria's observation</div>
       <div class="insight-tip">Your calm moments tend to happen in the mornings. Consider starting each day with a 5-minute breathing exercise — your data shows it significantly improves your afternoon mood.</div>
     </div>
+  </div>
 
-  </div><!-- /insights -->
-
-  <!-- ════ BOTTOM NAV ════ -->
+  <!-- BOTTOM NAV -->
   <div class="bottom-nav">
     <button class="nav-btn active" id="nav-home" onclick="showScreen('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -482,16 +481,11 @@ input[type=range] {
     </button>
   </div>
 
-</div><!-- /app -->
+</div>
 
 <script>
-/* ─── STATE ─── */
-let selectedMood = null;
-let breathingActive = false;
-let breatheTimer = null;
-let chatHistory = [];
+let selectedMood = null, breathingActive = false, breatheTimer = null, chatHistory = [];
 
-/* ─── NAVIGATION ─── */
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
@@ -499,145 +493,99 @@ function showScreen(id) {
   const nb = document.getElementById('nav-' + id);
   if (nb) nb.classList.add('active');
 }
-
-/* ─── HOME ─── */
 function selectMood(btn) {
   document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   selectedMood = btn.dataset.mood;
 }
-
 function updateIntensity(val) {
   document.getElementById('intensity-display').textContent = val;
   document.getElementById('intensity-fill').style.width = (val * 10) + '%';
 }
-
-function togglePill(el) {
-  el.classList.toggle('selected');
-}
-
+function togglePill(el) { el.classList.toggle('selected'); }
 function startChat() {
-  const mood      = selectedMood || 'something';
+  const mood = selectedMood || 'something';
   const intensity = document.getElementById('intensity-slider').value;
-  const note      = document.getElementById('journal-note').value.trim();
-  const pills     = [...document.querySelectorAll('.context-pill.selected')].map(p => p.textContent);
-
+  const note = document.getElementById('journal-note').value.trim();
+  const pills = [...document.querySelectorAll('.context-pill.selected')].map(p => p.textContent);
   let intro = `I'm feeling ${mood.toLowerCase()}`;
   if (parseInt(intensity) >= 7) intro += ` quite intensely (${intensity}/10)`;
-  if (pills.length)             intro += `, related to ${pills.join(', ')}`;
-  if (note)                     intro += `. ${note}`;
-
+  if (pills.length) intro += `, related to ${pills.join(', ')}`;
+  if (note) intro += `. ${note}`;
   showScreen('chat');
-  setTimeout(() => {
-    document.getElementById('chat-input').value = intro;
-    sendMessage();
-  }, 400);
+  setTimeout(() => { document.getElementById('chat-input').value = intro; sendMessage(); }, 400);
 }
-
-/* ─── CHAT ─── */
-function handleChatKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-}
-
+function handleChatKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
 async function sendMessage() {
   const input = document.getElementById('chat-input');
-  const text  = input.value.trim();
+  const text = input.value.trim();
   if (!text) return;
   input.value = '';
-
   addMessage('user', text);
   chatHistory.push({ role: 'user', content: text });
-
   const typingEl = addTyping();
-
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: `You are Aria, a warm, empathetic AI therapist for the MoodLink app. Your role is to:
-- Listen actively and validate emotions without judgment
-- Use evidence-based techniques: CBT, mindfulness, somatic awareness
-- Ask thoughtful, open-ended questions to help the user explore their feelings
-- Offer practical coping strategies when appropriate
-- Be concise (2–4 sentences per response) but deeply human
-- Never diagnose or replace professional care; gently suggest professional help for serious issues
-- Use a calm, caring tone with occasional gentle warmth`,
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        system: `You are Aria, a warm, empathetic AI therapist for the MoodLink app. Listen actively, validate emotions, use CBT and mindfulness techniques, ask open-ended questions. Be concise (2-4 sentences). Never diagnose or replace professional care.`,
         messages: chatHistory
       })
     });
-
-    const data  = await resp.json();
-    const reply = data.content?.map(c => c.text || '').join('') ||
-                  "I'm here with you. Could you tell me a little more?";
-
+    const data = await resp.json();
+    const reply = data.content?.map(c => c.text || '').join('') || "I'm here with you. Could you tell me a little more?";
     typingEl.remove();
     addMessage('ai', reply);
     chatHistory.push({ role: 'assistant', content: reply });
-
-  } catch (err) {
+  } catch(err) {
     typingEl.remove();
-    addMessage('ai', "I'm here with you. It seems there's a connection issue right now. Please check your API key or try again in a moment 💚");
+    addMessage('ai', "I'm here with you. It seems there's a connection issue right now. Please check your API key or try again 💜");
   }
 }
-
 function addMessage(role, text) {
   const wrap = document.getElementById('messages');
-  const div  = document.createElement('div');
+  const div = document.createElement('div');
   div.className = 'msg ' + role;
-  if (role === 'ai') {
-    div.innerHTML = `<div class="msg-avatar">🌿</div><div class="msg-bubble">${text}</div>`;
-  } else {
-    div.innerHTML = `<div class="msg-bubble">${text}</div>`;
-  }
+  div.innerHTML = role === 'ai'
+    ? `<div class="msg-avatar">🌿</div><div class="msg-bubble">${text}</div>`
+    : `<div class="msg-bubble">${text}</div>`;
   wrap.appendChild(div);
   wrap.scrollTop = wrap.scrollHeight;
   return div;
 }
-
 function addTyping() {
   const wrap = document.getElementById('messages');
-  const div  = document.createElement('div');
+  const div = document.createElement('div');
   div.className = 'msg ai';
-  div.innerHTML  = `<div class="msg-avatar">🌿</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  div.innerHTML = `<div class="msg-avatar">🌿</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
   wrap.appendChild(div);
   wrap.scrollTop = wrap.scrollHeight;
   return div;
 }
 
-/* ─── BREATHING ─── */
 const phases = [
-  { label: 'Inhale',  duration: 4, emoji: '🌬️', cls: 'expand' },
-  { label: 'Hold',    duration: 4, emoji: '🤍',  cls: 'hold'   },
-  { label: 'Exhale',  duration: 4, emoji: '🍃',  cls: 'shrink' },
-  { label: 'Hold',    duration: 4, emoji: '✨',  cls: 'hold'   }
+  { label:'Inhale', duration:4, emoji:'🌬️', cls:'expand' },
+  { label:'Hold',   duration:4, emoji:'🤍',  cls:'hold'   },
+  { label:'Exhale', duration:4, emoji:'🍃',  cls:'shrink' },
+  { label:'Hold',   duration:4, emoji:'✨',  cls:'hold'   }
 ];
 let phaseIdx = 0, countdown = 4;
-
-function toggleBreathing() {
-  breathingActive ? stopBreathing() : startBreathing();
-}
-
+function toggleBreathing() { breathingActive ? stopBreathing() : startBreathing(); }
 function startBreathing() {
   breathingActive = true;
   document.getElementById('breathe-btn').textContent = 'Stop';
-  phaseIdx = 0;
-  countdown = phases[0].duration;
-  runPhase();
+  phaseIdx = 0; countdown = phases[0].duration; runPhase();
 }
-
 function stopBreathing() {
-  breathingActive = false;
-  clearTimeout(breatheTimer);
+  breathingActive = false; clearTimeout(breatheTimer);
   document.getElementById('breathe-btn').textContent = 'Start';
   document.getElementById('breathe-instruction').textContent = 'Ready?';
   document.getElementById('breathe-count').textContent = '—';
   document.getElementById('breathe-phase').textContent = '4-4-4-4 pattern';
   document.getElementById('breathe-ring').className = 'breathe-ring';
 }
-
 function runPhase() {
   if (!breathingActive) return;
   const p = phases[phaseIdx];
@@ -646,35 +594,33 @@ function runPhase() {
   document.getElementById('breathe-ring').className = 'breathe-ring ' + p.cls;
   tick();
 }
-
 function tick() {
   if (!breathingActive) return;
   document.getElementById('breathe-count').textContent = countdown;
   if (countdown <= 0) {
-    phaseIdx  = (phaseIdx + 1) % phases.length;
+    phaseIdx = (phaseIdx + 1) % phases.length;
     countdown = phases[phaseIdx].duration;
-    runPhase();
-    return;
+    runPhase(); return;
   }
   countdown--;
   breatheTimer = setTimeout(tick, 1000);
 }
 
-/* ─── WEEK CHART ─── */
-const weekData   = [72, 55, 80, 45, 68, 90, 60];
-const weekColors = ['#7DAA92','#C3B8D9','#7DAA92','#E8C4B8','#7DAA92','#7DAA92','#C3B8D9'];
+const weekData   = [72,55,80,45,68,90,60];
+const weekColors = [
+  'rgba(138,43,226,0.7)', 'rgba(163,149,176,0.5)', 'rgba(138,43,226,0.8)',
+  'rgba(255,42,133,0.5)', 'rgba(138,43,226,0.7)',  'rgba(255,42,133,0.8)', 'rgba(163,149,176,0.5)'
+];
 const chart = document.getElementById('week-chart');
-weekData.forEach((v, i) => {
+weekData.forEach((v,i) => {
   const wrap = document.createElement('div');
   wrap.className = 'week-bar-wrap';
   const bar = document.createElement('div');
   bar.className = 'week-bar';
-  bar.style.height     = v + '%';
+  bar.style.height = v + '%';
   bar.style.background = weekColors[i];
-  wrap.appendChild(bar);
-  chart.appendChild(wrap);
+  wrap.appendChild(bar); chart.appendChild(wrap);
 });
 </script>
-
 </body>
 </html>
