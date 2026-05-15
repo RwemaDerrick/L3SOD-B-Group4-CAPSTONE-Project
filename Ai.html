@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MoodLink — AI Emotional Therapy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sage: #7DAA92;
+  --sage-light: #C2D9CC;
+  --sage-dark: #3D6B56;
+  --blush: #E8C4B8;
+  --blush-dark: #B5826E;
+  --lavender: #C3B8D9;
+  --lavender-dark: #7B6FA8;
+  --sky: #B8D3E8;
+  --amber: #E8D5A0;
+  --amber-dark: #9E7E35;
+  --warm-white: #FAF8F5;
+  --soft-gray: #EAE8E4;
+  --text-main: #2C2C2A;
+  --text-muted: #7A7872;
+  --text-hint: #AEACA6;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--warm-white);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.app {
+  max-width: 480px;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--warm-white);
+  position: relative;
+}
+
+/* ── HEADER ── */
+.header {
+  padding: 20px 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.5px solid var(--soft-gray);
+  position: sticky;
+  top: 0;
+  background: var(--warm-white);
+  z-index: 10;
+}
+.logo { display: flex; align-items: center; cursor: pointer; }
+.logo img { height: 42px; width: auto; object-fit: contain; filter: brightness(1.1); transition: transform 0.3s ease; }
+.logo:hover img { transform: scale(1.05); }
+.streak-badge {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--amber); color: var(--amber-dark);
+  font-size: 12px; font-weight: 500;
+  padding: 5px 10px; border-radius: 20px;
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+}
+.screen.active { display: flex; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ── HOME ── */
+.greeting { margin-bottom: 24px; }
+.greeting-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; }
+.greeting-main { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.25; color: var(--text-main); }
+.greeting-main em { color: var(--sage-dark); font-style: italic; }
+
+.mood-section-title { font-size: 12px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 14px; }
+
+.mood-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+.mood-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 8px; border-radius: 16px;
+  border: 1.5px solid transparent;
+  cursor: pointer; transition: all 0.2s;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.mood-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.mood-btn.selected { border-color: var(--sage); background: #F0F7F3; }
+.mood-emoji { font-size: 24px; }
+.mood-label { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+.mood-btn.selected .mood-label { color: var(--sage-dark); }
+
+.intensity-block { margin-bottom: 24px; }
+.intensity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.intensity-val { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--sage-dark); }
+.intensity-bar-wrap { position: relative; height: 6px; background: var(--soft-gray); border-radius: 3px; }
+.intensity-fill { position: absolute; height: 100%; border-radius: 3px; background: linear-gradient(to right, var(--blush), var(--sage)); transition: width 0.3s; pointer-events: none; }
+input[type=range] {
+  position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; top: 0; left: 0;
+}
+
+.journal-area {
+  width: 100%; min-height: 90px; resize: none;
+  border: 1px solid var(--soft-gray); border-radius: 12px;
+  padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+  color: var(--text-main); background: white; line-height: 1.6;
+  transition: border-color 0.2s; margin-bottom: 16px;
+}
+.journal-area:focus { outline: none; border-color: var(--sage); }
+.journal-area::placeholder { color: var(--text-hint); }
+
+.btn-primary {
+  width: 100%; padding: 15px; border-radius: 14px;
+  background: var(--sage-dark); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+  border: none; cursor: pointer; transition: all 0.2s;
+  letter-spacing: 0.2px;
+}
+.btn-primary:hover { background: #2E5444; transform: translateY(-1px); }
+.btn-primary:active { transform: scale(0.99); }
+
+.btn-secondary {
+  padding: 10px 20px; border-radius: 10px;
+  background: transparent; color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  border: 1px solid var(--soft-gray); cursor: pointer; transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--soft-gray); }
+
+.quick-tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 8px; }
+.tool-card {
+  padding: 14px 12px; border-radius: 14px; border: 1px solid var(--soft-gray);
+  background: white; cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.tool-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+.tool-icon { font-size: 22px; margin-bottom: 6px; }
+.tool-name { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+
+.context-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.context-pill {
+  padding: 7px 14px; border-radius: 20px; font-size: 13px;
+  border: 1.5px solid var(--soft-gray); background: white; cursor: pointer;
+  transition: all 0.18s; color: var(--text-muted); font-weight: 400;
+}
+.context-pill.selected { background: #EEF5F1; border-color: var(--sage); color: var(--sage-dark); font-weight: 500; }
+
+/* ── CHAT ── */
+#screen-chat { padding-bottom: 0; }
+
+.chat-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; padding-bottom: 16px;
+  border-bottom: 0.5px solid var(--soft-gray);
+}
+.therapist-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--lavender), var(--sage-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.therapist-info .name { font-weight: 500; font-size: 15px; }
+.therapist-info .status { font-size: 12px; color: var(--sage-dark); display: flex; align-items: center; gap: 4px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); display: inline-block; }
+
+.messages-wrap {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
+  margin-bottom: 16px; min-height: 300px; max-height: 55vh; padding-right: 4px;
+}
+.messages-wrap::-webkit-scrollbar { width: 3px; }
+.messages-wrap::-webkit-scrollbar-thumb { background: var(--soft-gray); border-radius: 3px; }
+
+.msg { display: flex; gap: 10px; max-width: 88%; }
+.msg.user { flex-direction: row-reverse; align-self: flex-end; }
+.msg-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.6; }
+.msg.ai .msg-bubble { background: white; border: 0.5px solid var(--soft-gray); border-radius: 4px 18px 18px 18px; color: var(--text-main); }
+.msg.user .msg-bubble { background: var(--sage-dark); color: white; border-radius: 18px 4px 18px 18px; }
+.msg-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--lavender), var(--sage-light)); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+
+.typing-indicator { display: flex; gap: 4px; padding: 14px 16px; background: white; border: 0.5px solid var(--soft-gray); border-radius: 4px 18px 18px 18px; width: fit-content; }
+.typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-hint); animation: typingPulse 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingPulse { 0%,60%,100% { transform: scale(1); opacity: 0.5; } 30% { transform: scale(1.3); opacity: 1; } }
+
+.chat-input-row { display: flex; gap: 8px; align-items: flex-end; padding-bottom: 16px; }
+.chat-input {
+  flex: 1; min-height: 44px; max-height: 120px; resize: none;
+  border: 1px solid var(--soft-gray); border-radius: 12px;
+  padding: 11px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+  color: var(--text-main); background: white; line-height: 1.5;
+}
+.chat-input:focus { outline: none; border-color: var(--sage); }
+.send-btn {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--sage-dark); color: white; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.send-btn:hover { background: #2E5444; }
+.send-btn svg { width: 18px; height: 18px; }
+
+/* ── BREATHE ── */
+.breathe-center { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 32px 0; }
+.breathe-ring-wrap { position: relative; width: 200px; height: 200px; margin-bottom: 32px; }
+.breathe-ring {
+  width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(125,170,146,0.2), rgba(195,184,217,0.3));
+  border: 2px solid var(--sage-light);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 4s ease-in-out;
+}
+.breathe-ring.expand { transform: scale(1.4); }
+.breathe-ring.hold { transform: scale(1.4); transition: transform 0.1s; }
+.breathe-ring.shrink { transform: scale(1); }
+.breathe-ring-inner {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle, var(--sage-light), var(--lavender));
+  display: flex; align-items: center; justify-content: center;
+}
+.breathe-instruction { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--sage-dark); margin-bottom: 8px; text-align: center; }
+.breathe-count { font-size: 36px; font-weight: 300; color: var(--text-muted); margin-bottom: 24px; }
+.breathe-phase { font-size: 13px; color: var(--text-hint); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 32px; text-align: center; }
+.breathe-controls { display: flex; gap: 12px; }
+
+/* ── INSIGHTS ── */
+.insight-card { background: white; border: 0.5px solid var(--soft-gray); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+.insight-card-title { font-weight: 500; font-size: 14px; margin-bottom: 12px; color: var(--text-main); }
+.mood-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.mood-bar-label { font-size: 12px; color: var(--text-muted); width: 72px; flex-shrink: 0; }
+.mood-bar-track { flex: 1; height: 8px; background: var(--soft-gray); border-radius: 4px; overflow: hidden; }
+.mood-bar-fill { height: 100%; border-radius: 4px; }
+.mood-bar-pct { font-size: 12px; color: var(--text-hint); width: 30px; text-align: right; flex-shrink: 0; }
+.insight-tip { background: #F0F7F3; border-left: 3px solid var(--sage); border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13px; color: var(--sage-dark); line-height: 1.6; }
+
+.week-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+.week-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+.week-bar { width: 100%; border-radius: 6px 6px 0 0; min-height: 4px; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  display: flex; padding: 12px 24px 20px; gap: 4px;
+  border-top: 0.5px solid var(--soft-gray); background: var(--warm-white);
+  position: sticky; bottom: 0;
+}
+.nav-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 4px; border-radius: 10px; border: none;
+  background: transparent; cursor: pointer; transition: all 0.2s;
+  color: var(--text-hint); font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+}
+.nav-btn.active { background: #F0F7F3; color: var(--sage-dark); }
+.nav-btn svg { width: 22px; height: 22px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo" onclick="location.href='index.html'">
+      <img src="Assets/logo.png" alt="MoodLink Logo">
+    </div>
+    <div class="streak-badge">🔥 7 day streak</div>
+  </div>
+
+  <!-- ════ HOME SCREEN ════ -->
+  <div class="screen active" id="screen-home">
+
+    <div class="greeting">
+      <div class="greeting-sub">Good afternoon</div>
+      <div class="greeting-main">How are you <em>feeling</em> right now?</div>
+    </div>
+
+    <div class="mood-section-title">Select your mood</div>
+    <div class="mood-grid">
+      <button class="mood-btn" data-mood="Joyful"   onclick="selectMood(this)"><span class="mood-emoji">😊</span><span class="mood-label">Joyful</span></button>
+      <button class="mood-btn" data-mood="Calm"     onclick="selectMood(this)"><span class="mood-emoji">😌</span><span class="mood-label">Calm</span></button>
+      <button class="mood-btn" data-mood="Anxious"  onclick="selectMood(this)"><span class="mood-emoji">😰</span><span class="mood-label">Anxious</span></button>
+      <button class="mood-btn" data-mood="Sad"      onclick="selectMood(this)"><span class="mood-emoji">😔</span><span class="mood-label">Sad</span></button>
+      <button class="mood-btn" data-mood="Stressed" onclick="selectMood(this)"><span class="mood-emoji">😤</span><span class="mood-label">Stressed</span></button>
+      <button class="mood-btn" data-mood="Hopeful"  onclick="selectMood(this)"><span class="mood-emoji">🌱</span><span class="mood-label">Hopeful</span></button>
+      <button class="mood-btn" data-mood="Tired"    onclick="selectMood(this)"><span class="mood-emoji">😴</span><span class="mood-label">Tired</span></button>
+      <button class="mood-btn" data-mood="Angry"    onclick="selectMood(this)"><span class="mood-emoji">😠</span><span class="mood-label">Angry</span></button>
+    </div>
+
+    <div class="mood-section-title">Intensity</div>
+    <div class="intensity-block">
+      <div class="intensity-header">
+        <span style="font-size:13px;color:var(--text-muted)">How strong is this feeling?</span>
+        <span class="intensity-val" id="intensity-display">5</span>
+      </div>
+      <div class="intensity-bar-wrap">
+        <div class="intensity-fill" id="intensity-fill" style="width:50%"></div>
+        <input type="range" min="1" max="10" value="5" id="intensity-slider" oninput="updateIntensity(this.value)">
+      </div>
+    </div>
+
+    <div class="mood-section-title">What's going on?</div>
+    <div class="context-pills">
+      <span class="context-pill" onclick="togglePill(this)">Work</span>
+      <span class="context-pill" onclick="togglePill(this)">Relationships</span>
+      <span class="context-pill" onclick="togglePill(this)">Health</span>
+      <span class="context-pill" onclick="togglePill(this)">Family</span>
+      <span class="context-pill" onclick="togglePill(this)">Finances</span>
+      <span class="context-pill" onclick="togglePill(this)">Sleep</span>
+      <span class="context-pill" onclick="togglePill(this)">Loneliness</span>
+    </div>
+
+    <textarea class="journal-area" id="journal-note" placeholder="Add a note — what's on your mind? (optional)"></textarea>
+    <button class="btn-primary" onclick="startChat()">Talk to my AI therapist →</button>
+
+    <div style="margin-top:28px">
+      <div class="mood-section-title">Quick tools</div>
+      <div class="quick-tools">
+        <div class="tool-card" onclick="showScreen('breathe')">
+          <div class="tool-icon">🌬️</div>
+          <div class="tool-name">Breathe</div>
+        </div>
+        <div class="tool-card" onclick="showScreen('insights')">
+          <div class="tool-icon">📊</div>
+          <div class="tool-name">Insights</div>
+        </div>
+        <div class="tool-card" onclick="showScreen('chat')">
+          <div class="tool-icon">💬</div>
+          <div class="tool-name">Chat</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /home -->
+
+  <!-- ════ CHAT SCREEN ════ -->
+  <div class="screen" id="screen-chat" style="padding-bottom:0;">
+
+    <div class="chat-header">
+      <div class="therapist-avatar">🌿</div>
+      <div class="therapist-info">
+        <div class="name">Aria — Your AI Therapist</div>
+        <div class="status"><span class="status-dot"></span> Here for you now</div>
+      </div>
+      <button class="btn-secondary" onclick="showScreen('home')" style="margin-left:auto;font-size:12px;padding:7px 12px;">← Back</button>
+    </div>
+
+    <div class="messages-wrap" id="messages">
+      <div class="msg ai">
+        <div class="msg-avatar">🌿</div>
+        <div class="msg-bubble">Hi, I'm Aria 🌿 I'm here to listen and support you. This is a safe, judgment-free space. What would you like to talk about today?</div>
+      </div>
+    </div>
+
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chat-input" placeholder="Share what's on your mind..." rows="1" onkeydown="handleChatKey(event)"></textarea>
+      <button class="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+
+  </div><!-- /chat -->
+
+  <!-- ════ BREATHE SCREEN ════ -->
+  <div class="screen" id="screen-breathe">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <span style="font-family:'DM Serif Display',serif;font-size:20px;">Box Breathing</span>
+      <button class="btn-secondary" onclick="stopBreathing();showScreen('home')" style="font-size:12px;padding:7px 12px;">← Back</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;">A technique used by Navy SEALs to calm the nervous system.</p>
+
+    <div class="breathe-center">
+      <div class="breathe-ring-wrap">
+        <div class="breathe-ring" id="breathe-ring">
+          <div class="breathe-ring-inner">
+            <span style="font-size:28px;" id="breathe-emoji">🌬️</span>
+          </div>
+        </div>
+      </div>
+      <div class="breathe-instruction" id="breathe-instruction">Ready?</div>
+      <div class="breathe-count" id="breathe-count">—</div>
+      <div class="breathe-phase" id="breathe-phase">4-4-4-4 pattern</div>
+      <div class="breathe-controls">
+        <button class="btn-primary" id="breathe-btn" onclick="toggleBreathing()" style="width:140px;">Start</button>
+      </div>
+    </div>
+
+  </div><!-- /breathe -->
+
+  <!-- ════ INSIGHTS SCREEN ════ -->
+  <div class="screen" id="screen-insights">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <span style="font-family:'DM Serif Display',serif;font-size:20px;">Your insights</span>
+      <button class="btn-secondary" onclick="showScreen('home')" style="font-size:12px;padding:7px 12px;">← Back</button>
+    </div>
+
+    <div class="insight-card">
+      <div class="insight-card-title">This week's mood</div>
+      <div class="week-chart" id="week-chart"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;">
+        <span style="font-size:11px;color:var(--text-hint)">Mon</span>
+        <span style="font-size:11px;color:var(--text-hint)">Tue</span>
+        <span style="font-size:11px;color:var(--text-hint)">Wed</span>
+        <span style="font-size:11px;color:var(--text-hint)">Thu</span>
+        <span style="font-size:11px;color:var(--text-hint)">Fri</span>
+        <span style="font-size:11px;color:var(--text-hint)">Sat</span>
+        <span style="font-size:11px;color:var(--text-hint)">Sun</span>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="insight-card-title">Most frequent emotions</div>
+      <div class="mood-bar-row">
+        <span class="mood-bar-label">😌 Calm</span>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:74%;background:var(--sage);"></div></div>
+        <span class="mood-bar-pct">74%</span>
+      </div>
+      <div class="mood-bar-row">
+        <span class="mood-bar-label">😰 Anxious</span>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:52%;background:var(--lavender-dark);"></div></div>
+        <span class="mood-bar-pct">52%</span>
+      </div>
+      <div class="mood-bar-row">
+        <span class="mood-bar-label">😊 Joyful</span>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:40%;background:var(--amber-dark);"></div></div>
+        <span class="mood-bar-pct">40%</span>
+      </div>
+      <div class="mood-bar-row">
+        <span class="mood-bar-label">😔 Sad</span>
+        <div class="mood-bar-track"><div class="mood-bar-fill" style="width:22%;background:var(--sky);"></div></div>
+        <span class="mood-bar-pct">22%</span>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="insight-card-title">Aria's observation</div>
+      <div class="insight-tip">Your calm moments tend to happen in the mornings. Consider starting each day with a 5-minute breathing exercise — your data shows it significantly improves your afternoon mood.</div>
+    </div>
+
+  </div><!-- /insights -->
+
+  <!-- ════ BOTTOM NAV ════ -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-home" onclick="showScreen('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </button>
+    <button class="nav-btn" id="nav-chat" onclick="showScreen('chat')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Therapy
+    </button>
+    <button class="nav-btn" id="nav-breathe" onclick="showScreen('breathe')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      Breathe
+    </button>
+    <button class="nav-btn" id="nav-insights" onclick="showScreen('insights')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Insights
+    </button>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+/* ─── STATE ─── */
+let selectedMood = null;
+let breathingActive = false;
+let breatheTimer = null;
+let chatHistory = [];
+
+/* ─── NAVIGATION ─── */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById('nav-' + id);
+  if (nb) nb.classList.add('active');
+}
+
+/* ─── HOME ─── */
+function selectMood(btn) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedMood = btn.dataset.mood;
+}
+
+function updateIntensity(val) {
+  document.getElementById('intensity-display').textContent = val;
+  document.getElementById('intensity-fill').style.width = (val * 10) + '%';
+}
+
+function togglePill(el) {
+  el.classList.toggle('selected');
+}
+
+function startChat() {
+  const mood      = selectedMood || 'something';
+  const intensity = document.getElementById('intensity-slider').value;
+  const note      = document.getElementById('journal-note').value.trim();
+  const pills     = [...document.querySelectorAll('.context-pill.selected')].map(p => p.textContent);
+
+  let intro = `I'm feeling ${mood.toLowerCase()}`;
+  if (parseInt(intensity) >= 7) intro += ` quite intensely (${intensity}/10)`;
+  if (pills.length)             intro += `, related to ${pills.join(', ')}`;
+  if (note)                     intro += `. ${note}`;
+
+  showScreen('chat');
+  setTimeout(() => {
+    document.getElementById('chat-input').value = intro;
+    sendMessage();
+  }, 400);
+}
+
+/* ─── CHAT ─── */
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text  = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  addMessage('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  const typingEl = addTyping();
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are Aria, a warm, empathetic AI therapist for the MoodLink app. Your role is to:
+- Listen actively and validate emotions without judgment
+- Use evidence-based techniques: CBT, mindfulness, somatic awareness
+- Ask thoughtful, open-ended questions to help the user explore their feelings
+- Offer practical coping strategies when appropriate
+- Be concise (2–4 sentences per response) but deeply human
+- Never diagnose or replace professional care; gently suggest professional help for serious issues
+- Use a calm, caring tone with occasional gentle warmth`,
+        messages: chatHistory
+      })
+    });
+
+    const data  = await resp.json();
+    const reply = data.content?.map(c => c.text || '').join('') ||
+                  "I'm here with you. Could you tell me a little more?";
+
+    typingEl.remove();
+    addMessage('ai', reply);
+    chatHistory.push({ role: 'assistant', content: reply });
+
+  } catch (err) {
+    typingEl.remove();
+    addMessage('ai', "I'm here with you. It seems there's a connection issue right now. Please check your API key or try again in a moment 💚");
+  }
+}
+
+function addMessage(role, text) {
+  const wrap = document.getElementById('messages');
+  const div  = document.createElement('div');
+  div.className = 'msg ' + role;
+  if (role === 'ai') {
+    div.innerHTML = `<div class="msg-avatar">🌿</div><div class="msg-bubble">${text}</div>`;
+  } else {
+    div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+  }
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+  return div;
+}
+
+function addTyping() {
+  const wrap = document.getElementById('messages');
+  const div  = document.createElement('div');
+  div.className = 'msg ai';
+  div.innerHTML  = `<div class="msg-avatar">🌿</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+  return div;
+}
+
+/* ─── BREATHING ─── */
+const phases = [
+  { label: 'Inhale',  duration: 4, emoji: '🌬️', cls: 'expand' },
+  { label: 'Hold',    duration: 4, emoji: '🤍',  cls: 'hold'   },
+  { label: 'Exhale',  duration: 4, emoji: '🍃',  cls: 'shrink' },
+  { label: 'Hold',    duration: 4, emoji: '✨',  cls: 'hold'   }
+];
+let phaseIdx = 0, countdown = 4;
+
+function toggleBreathing() {
+  breathingActive ? stopBreathing() : startBreathing();
+}
+
+function startBreathing() {
+  breathingActive = true;
+  document.getElementById('breathe-btn').textContent = 'Stop';
+  phaseIdx = 0;
+  countdown = phases[0].duration;
+  runPhase();
+}
+
+function stopBreathing() {
+  breathingActive = false;
+  clearTimeout(breatheTimer);
+  document.getElementById('breathe-btn').textContent = 'Start';
+  document.getElementById('breathe-instruction').textContent = 'Ready?';
+  document.getElementById('breathe-count').textContent = '—';
+  document.getElementById('breathe-phase').textContent = '4-4-4-4 pattern';
+  document.getElementById('breathe-ring').className = 'breathe-ring';
+}
+
+function runPhase() {
+  if (!breathingActive) return;
+  const p = phases[phaseIdx];
+  document.getElementById('breathe-instruction').textContent = p.label;
+  document.getElementById('breathe-emoji').textContent = p.emoji;
+  document.getElementById('breathe-ring').className = 'breathe-ring ' + p.cls;
+  tick();
+}
+
+function tick() {
+  if (!breathingActive) return;
+  document.getElementById('breathe-count').textContent = countdown;
+  if (countdown <= 0) {
+    phaseIdx  = (phaseIdx + 1) % phases.length;
+    countdown = phases[phaseIdx].duration;
+    runPhase();
+    return;
+  }
+  countdown--;
+  breatheTimer = setTimeout(tick, 1000);
+}
+
+/* ─── WEEK CHART ─── */
+const weekData   = [72, 55, 80, 45, 68, 90, 60];
+const weekColors = ['#7DAA92','#C3B8D9','#7DAA92','#E8C4B8','#7DAA92','#7DAA92','#C3B8D9'];
+const chart = document.getElementById('week-chart');
+weekData.forEach((v, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'week-bar-wrap';
+  const bar = document.createElement('div');
+  bar.className = 'week-bar';
+  bar.style.height     = v + '%';
+  bar.style.background = weekColors[i];
+  wrap.appendChild(bar);
+  chart.appendChild(wrap);
+});
+
+// Handle initial hash for deep linking
+window.addEventListener('load', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (['home', 'chat', 'breathe', 'insights'].includes(hash)) {
+    showScreen(hash);
+    if (hash === 'breathe') startBreathing();
+  }
+});
+</script>
+
+</body>
+</html>
