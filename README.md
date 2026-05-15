@@ -1,1 +1,0 @@
-# L3SOD-B-Group4-CAPSTONE-Project
