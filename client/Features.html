@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='index.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Features.html" class="active">Features</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="home.html" class="btn-primary btn-nav">Get Started</a>
+  </nav>
+  <header class="page-hero">
+    <div class="badge">Platform</div>
+    <h1>Built for <span class="text-gradient">Real Connection</span></h1>
+  </header>
+  <section class="content-grid">
+    <article class="feature-card"><div class="icon">⚡</div><h3>Instant Matching</h3><p>Join a live queue by mood and get paired in seconds.</p></article>
+    <article class="feature-card"><div class="icon">🧠</div><h3>Aria AI</h3><p>24/7 supportive chat with crisis-aware responses.</p></article>
+    <article class="feature-card"><div class="icon">🔒</div><h3>Secure Accounts</h3><p>JWT auth, hashed passwords, and rate limiting.</p></article>
+    <article class="feature-card"><div class="icon">💬</div><h3>Peer Chat</h3><p>Private rooms with persisted messages.</p></article>
+  </section>
+  <footer><p style="color:var(--text-secondary);text-align:center;padding:2rem;">&copy; 2026 Moodlink</p></footer>
+</body>
+<script>
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+</script>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+  <link rel="icon" href="Assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='home.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="About.html" class="active">About</a></li>
+      <li><a href="Features.html">Features</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="home.html" class="btn-primary btn-nav">Home</a>
+  </nav>
+  <header class="page-hero">
+    <div class="badge">Our Mission</div>
+    <h1>Pioneering <span class="text-gradient">Digital Empathy</span></h1>
+    <p>Moodlink was built so no one has to process big feelings alone.</p>
+  </header>
+  <section class="content-grid">
+    <article class="feature-card"><div class="icon">💜</div><h3>People First</h3><p>Real-time mood matching connects you with others who understand.</p></article>
+    <article class="feature-card"><div class="icon">🛡️</div><h3>Safety by Design</h3><p>Crisis detection on Aria and clear wellness boundaries.</p></article>
+    <article class="feature-card"><div class="icon">🌱</div><h3>Growth Mindset</h3><p>CBT-inspired tools help build emotional resilience.</p></article>
+  </section>
+  <footer><p style="color: var(--text-secondary); text-align:center; padding: 2rem;">&copy; 2026 Moodlink</p></footer>
+  <script type="module" src="js/transitions.js">
+
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+</script>
+</body>
+</html>

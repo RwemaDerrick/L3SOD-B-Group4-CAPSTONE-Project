@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='home.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="aria.html">Aria</a></li>
+      <li><a href="GetStarted.html" class="active">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button type="button" id="profile-nav-btn" class="profile-nav-btn" aria-label="Profile">
+        <img src="" alt="" hidden><span>?</span>
+      </button>
+    </div>
+  </nav>
+  <main class="dashboard page-content">
+    <div class="dashboard-header">
+      <h1 id="dash-greeting">Welcome</h1>
+      <p style="color:var(--text-secondary);">Set your mood, find a match, or <a href="aria.html">talk to Aria</a>.</p>
+    </div>
+    <h3>Current mood</h3>
+    <div id="mood-picker" class="mood-picker"></div>
+    <div id="match-status" class="match-status">Ready when you are.</div>
+    <button type="button" id="find-match" class="btn-primary glow">Find Match</button>
+    <button type="button" id="leave-match" class="btn-secondary" style="margin-left:0.75rem;">Leave Queue</button>
+    <div id="chat-panel" class="chat-panel glass-card" style="margin-top:2rem;padding:1.5rem;">
+      <h3>Your room</h3>
+      <div id="chat-messages" class="chat-messages"></div>
+      <form id="chat-form" style="display:flex;gap:0.5rem;">
+        <input type="text" id="chat-input" placeholder="Type a message..." style="flex:1;" required>
+        <button type="submit" class="btn-primary">Send</button>
+      </form>
+    </div>
+  </main>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
+  <script type="module">
+    import { initAppNav } from './js/nav.js';
+    initAppNav('GetStarted');
+  
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+</script>
+</body>
+</html>

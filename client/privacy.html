@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='index.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <a href="index.html" class="btn-secondary btn-nav">Home</a>
+  </nav>
+  <article class="dashboard" style="max-width:720px;">
+    <h1 class="text-gradient" style="font-size:2.5rem;margin-bottom:1rem;">Privacy Policy</h1>
+    <p style="color:var(--text-secondary);margin-bottom:1rem;">Last updated: May 2026</p>
+    <p>We collect account information (name, email), mood selections, chat messages, and Aria conversation logs to operate the service. Passwords are hashed; we do not sell personal data.</p>
+    <p style="margin-top:1rem;">Moodlink is a wellness platform, not a HIPAA-covered health provider. Do not use it for emergency medical situations.</p>
+    <p style="margin-top:1rem;">Contact us via the <a href="contact.html">contact page</a> for data deletion requests.</p>
+  </article>
+</body>
+<script>
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+</script>
+</html>

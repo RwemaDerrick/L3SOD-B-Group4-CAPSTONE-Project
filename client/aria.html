@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aria | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='home.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="aria.html" class="active">Aria</a></li>
+      <li><a href="GetStarted.html">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button type="button" id="profile-nav-btn" class="profile-nav-btn" aria-label="Profile">
+        <img src="" alt="" hidden><span>?</span>
+      </button>
+    </div>
+  </nav>
+  <section class="aria-page page-content">
+    <header style="text-align:center;margin-bottom:1.5rem;">
+      <div class="badge">AI Companion</div>
+      <h1 style="font-size:2.2rem;">Chat with <span class="text-gradient">Aria</span></h1>
+    </header>
+    <div class="aria-chat-box glass-card">
+      <div id="aria-messages" class="aria-messages"></div>
+      <form id="aria-form" class="aria-input-row">
+        <input type="text" id="aria-input" placeholder="Share what's on your mind..." autocomplete="off" required>
+        <button type="submit" class="btn-primary">Send</button>
+      </form>
+    </div>
+    <p class="aria-disclaimer">Aria offers wellness support, not medical advice. If you're in crisis, contact <strong>988</strong> or emergency services.</p>
+  </section>
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/aria-page.js"></script>
+  <script type="module">
+    import { initAppNav } from './js/nav.js';
+    initAppNav('aria');
+
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  passwordHash    String
+  name            String
+  age             Int?
+  bio             String?
+  profilePicture  String?
+  currentMood     String   @default("chill")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  messages       Message[]
+  roomMembers    RoomMember[]
+  ariaSessions   AriaSession[]
+  contactMessages ContactMessage[]
+}
+
+model Room {
+  id        String   @id @default(uuid())
+  mood      String
+  createdAt DateTime @default(now())
+
+  members  RoomMember[]
+  messages Message[]
+}
+
+model RoomMember {
+  id     String @id @default(uuid())
+  roomId String
+  userId String
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  roomId    String
+  userId    String
+  body      String
+  createdAt DateTime @default(now())
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AriaSession {
+  id        String   @id @default(uuid())
+  userId    String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  messages  AriaMessage[]
+}
+
+model AriaMessage {
+  id        String   @id @default(uuid())
+  sessionId String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+  session   AriaSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  userId    String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}

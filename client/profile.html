@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='home.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="GetStarted.html">Dashboard</a></li>
+      <li><a href="aria.html">Aria</a></li>
+      <li><a href="profile.html" class="active">Profile</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button type="button" id="profile-nav-btn" class="profile-nav-btn" aria-label="Profile">
+        <img src="" alt="" hidden><span>?</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="profile-page page-content dashboard">
+    <h1 class="text-gradient" style="font-size:2.5rem;margin-bottom:0.5rem;">Your Profile</h1>
+    <p style="color:var(--text-secondary);margin-bottom:2rem;">Update your photo, name, age, and more.</p>
+
+    <form id="profile-form" class="glass-card profile-card">
+      <div class="profile-avatar-edit">
+        <div id="profile-preview" class="profile-avatar-large">
+          <img id="profile-preview-img" src="" alt="" hidden>
+          <span id="profile-preview-initials">?</span>
+        </div>
+        <label class="btn-secondary profile-upload-btn">
+          Change photo
+          <input type="file" id="profile-picture" accept="image/*" hidden>
+        </label>
+      </div>
+
+      <div class="form-group"><label for="profile-name">Full name</label><input id="profile-name" required></div>
+      <div class="form-group"><label for="profile-email">Email</label><input id="profile-email" type="email" disabled></div>
+      <div class="form-group"><label for="profile-age">Age</label><input id="profile-age" type="number" min="13" max="120" placeholder="Optional"></div>
+      <div class="form-group"><label for="profile-bio">Bio</label><textarea id="profile-bio" rows="3" placeholder="Tell others a bit about you..."></textarea></div>
+
+      <hr class="profile-divider">
+      <h3 style="margin-bottom:1rem;">Change password</h3>
+      <div class="form-group"><label for="profile-current-password">Current password</label><input type="password" id="profile-current-password" autocomplete="current-password"></div>
+      <div class="form-group"><label for="profile-new-password">New password</label><input type="password" id="profile-new-password" minlength="6" autocomplete="new-password"></div>
+
+      <button type="submit" class="btn-primary btn-full glow">Save changes</button>
+      <div id="profile-response" class="form-message"></div>
+      <button type="button" id="logout-btn" class="btn-secondary btn-full" style="margin-top:1rem;">Log out</button>
+    </form>
+  </main>
+  
+  <script>
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+</script>
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/profile.js"></script>
+</body>
+</html>

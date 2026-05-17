@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<style>
+  /* PAGE TRANSITION */
+body{
+  opacity: 0;
+  transform: translateY(20px);
+  animation: pageEnter 0.8s ease forwards;
+}
+
+@keyframes pageEnter{
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* EXIT ANIMATION */
+body.fade-out{
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.5s ease;
+}
+
+/* NAV LINK EFFECT */
+.nav-links a,
+.btn-primary,
+.btn-secondary,
+.btn-match{
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* glow underline */
+.nav-links a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg,#ff2a85,#8a2be2);
+  transition: width 0.4s ease;
+}
+
+.nav-links a:hover::after{
+  width: 100%;
+}
+
+/* button hover glow */
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-match:hover{
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 0 20px rgba(255,42,133,0.35),
+    0 0 40px rgba(138,43,226,0.2);
+}
+</style>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='index.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Features.html">Features</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <a href="home.html" class="btn-primary btn-nav">Get Started</a>
+  </nav>
+  <section class="dashboard" style="max-width:560px;">
+    <header class="page-hero" style="padding-top:120px;">
+      <h1>Get in <span class="text-gradient">Touch</span></h1>
+      <p style="color:var(--text-secondary);">Questions, partnerships, or feedback.</p>
+    </header>
+    <form id="contact-form" class="glass-card" style="padding:2rem;">
+      <div class="form-group"><label for="contact-name">Name</label><input id="contact-name" required></div>
+      <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email" required></div>
+      <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" rows="5" required></textarea></div>
+      <button type="submit" class="btn-primary btn-full">Send Message</button>
+      <div id="contact-response" class="form-message"></div>
+    </form>
+    <p class="aria-disclaimer">In crisis? Call or text <strong>988</strong> (US).</p>
+  </section>
+  <footer><p style="color:var(--text-secondary);text-align:center;padding:2rem;">&copy; 2026 Moodlink</p></footer>
+  <script type="module" src="js/contact-page.js">
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+  </script>
+</body>
+</html>

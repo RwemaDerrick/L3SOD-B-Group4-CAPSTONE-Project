@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Moodlink — connect with people who share your mood.">
+  <title>Home | Moodlink</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/Style.css">
+
+  <link rel="icon" href="Assets/logo.svg" type="image/svg+xml">
+
+  <style>
+    /* HOVER GLOW LAYER */
+.emotion-card{
+  position: relative;
+  overflow: hidden;
+}
+
+/* moving light sweep */
+.emotion-card::after{
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transform: rotate(25deg);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+/* trigger sweep on hover */
+.emotion-card:hover::after{
+  left: 120%;
+}
+
+/* glow effect matching your theme */
+.emotion-card:hover{
+  box-shadow:
+    0 0 25px rgba(255, 42, 133, 0.25),
+    0 0 45px rgba(138, 43, 226, 0.15),
+    0 15px 35px rgba(0,0,0,0.35);
+  transform: scale(1.05);
+}
+  </style>
+</head>
+
+<body>
+
+  <div id="preloader">
+    <div class="preloader-content">
+      <img src="Assets/logo.svg" alt="Moodlink" class="pulse-logo">
+
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="background-effects">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <nav class="navbar glass">
+
+    <div class="logo" onclick="location.href='home.html'">
+      <img src="Assets/logo.svg" alt="Moodlink">
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="home.html" class="active">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Features.html">Features</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="GetStarted.html" class="btn-primary btn-nav">Dashboard</a>
+
+      <button type="button" id="profile-nav-btn" class="profile-nav-btn" aria-label="Profile">
+        <img src="" alt="" hidden>
+        <span>?</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-content">
+
+    <section id="home" class="hero">
+
+      <div class="hero-content">
+
+        <div class="badge fade-in-up">
+          Every Emotion Matters
+        </div>
+
+        <h1 class="fade-in-up delay-1">
+          Find Your <br>
+          <span class="text-gradient">Perfect Vibe</span>
+        </h1>
+
+        <p class="fade-in-up delay-2">
+          Connect with people who share your mood in a safe, supportive environment.
+        </p>
+
+        <div class="cta-group fade-in-up delay-3">
+          <a href="GetStarted.html" class="btn-primary glow">
+            Find a Match
+          </a>
+
+          <button type="button" class="btn-secondary" data-scroll-about>
+            Learn More
+          </button>
+        </div>
+
+      </div>
+
+      <div class="hero-visual fade-in delay-2">
+
+        <div id="three-canvas-container"></div>
+
+        <div class="glass-card main-card">
+
+          <div class="card-header">
+
+            <div class="user-avatar"></div>
+
+            <div>
+              <h4>Alex J.</h4>
+              <p>Feeling: Chill</p>
+            </div>
+
+          </div>
+
+          <div class="card-body">
+            Looking for someone to relax and listen to lofi with today.
+          </div>
+
+          <div class="card-footer">
+            <a href="GetStarted.html" class="btn-match">
+              Connect
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="landing-section" style="text-align:center;">
+
+      <div class="badge">
+        Real People. Real Emotions.
+      </div>
+
+      <h2 style="font-size:3.5rem;margin-bottom:1.5rem;">
+        Every <span class="text-gradient">Emotion</span> is a Bridge
+      </h2>
+
+      <div class="emotions-grid">
+
+         <div class="emotion-card fade-in-up delay-1"
+          style="
+          background:
+          linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+          url('Assets/stressed.jpg');
+          background-size:cover;
+          background-position:center;
+          ">
+
+          <div class="emotion-overlay">
+            <h3>Stressed</h3>
+            <p>Share the load.</p>
+          </div>
+      </div>
+
+        <div class="emotion-card fade-in-up delay-1"
+          style="
+          background:
+          linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+          url('Assets/confused.jpg');
+          background-size:cover;
+          background-position:center;
+          ">
+
+          <div class="emotion-overlay">
+            <h3>Confused</h3>
+            <p>Navigate uncertainty together.</p>
+          </div>
+
+        </div>
+
+        <div class="emotion-card fade-in-up delay-1"
+          style="
+          background:
+          linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+          url('Assets/intense.jpg');
+          background-size:cover;
+          background-position:center;
+          ">
+
+          <div class="emotion-overlay">
+            <h3>Intense</h3>
+            <p>Be heard and validated.</p>
+
+        </div>
+      </div>
+
+    </section>
+
+    <section id="how-it-works" class="landing-section" style="text-align:center;">
+
+      <div class="badge">
+        Simple Steps
+      </div>
+
+      <h2 style="font-size:3rem;margin-bottom:4rem;">
+        How Moodlink <span class="text-gradient">Connects You</span>
+      </h2>
+
+      <div class="steps-grid">
+
+        <div class="step-card fade-in-up">
+          <div class="step-num">01</div>
+          <h3>Check In</h3>
+          <p>Share your mood on the dashboard.</p>
+        </div>
+
+        <div class="step-card fade-in-up delay-1">
+          <div class="step-num">02</div>
+          <h3>Get Matched</h3>
+          <p>Find others on your frequency.</p>
+        </div>
+
+        <div class="step-card fade-in-up delay-2">
+          <div class="step-num">03</div>
+          <h3>Real Connection</h3>
+          <p>Chat in a safe space.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="aria-cta-section">
+
+      <div class="aria-cta-inner fade-in-up">
+
+        <div class="glass-card aria-cta-card">
+
+          <div class="badge">
+            AI Companion
+          </div>
+
+          <h2>
+            Meet <span class="text-gradient">Aria</span>
+          </h2>
+
+          <p>
+            24/7 judgment-free support.
+          </p>
+
+          <a href="aria.html" class="btn-aria">
+            <span class="aria-icon">🧠</span>
+            Talk to Aria
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    <div class="footer-links">
+      <a href="About.html">Our Mission</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+
+    <p style="color:var(--text-secondary);">
+      &copy; 2026 Moodlink
+    </p>
+
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/index.js"></script>
+
+  <script type="module">
+    import { initAppNav } from './js/nav.js';
+    initAppNav('home');
+  </script>
+
+</body>
+</html>

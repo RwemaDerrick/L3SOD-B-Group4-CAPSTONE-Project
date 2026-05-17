@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Moodlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+  <div class="background-effects"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <nav class="navbar glass">
+    <div class="logo" onclick="location.href='index.html'"><img src="Assets/logo.svg" alt="Moodlink"></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li><a href="Features.html">Features</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="GetStarted.html" class="btn-primary btn-nav">Dashboard</a>
+  </nav>
+  <header class="page-hero">
+    <div class="badge">What we offer</div>
+    <h1>Services for <span class="text-gradient">Every Mood</span></h1>
+  </header>
+  <section class="content-grid">
+    <article class="feature-card"><h3>Mood Matching</h3><p>Peer support rooms matched by emotional state in real time.</p><a href="GetStarted.html">Open dashboard →</a></article>
+    <article class="feature-card"><h3>Aria Wellness AI</h3><p>Guided reflection, grounding exercises, and compassionate listening.</p><a href="aria.html">Talk to Aria →</a></article>
+    <article class="feature-card"><h3>Community Check-ins</h3><p>Daily mood tracking to understand patterns over time.</p></article>
+  </section>
+  <footer><p style="color:var(--text-secondary);text-align:center;padding:2rem;">&copy; 2026 Moodlink</p></footer>
+</body>
+<script>
+  document.querySelectorAll("a").forEach(link => {
+
+    const href = link.getAttribute("href");
+
+    if (
+      href &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
+
+      link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+
+      });
+
+    }
+
+  });
+</script>
+</html>
